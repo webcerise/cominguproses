@@ -93,12 +93,6 @@ button:focus-visible, a:focus-visible, input:focus-visible {
   outline-offset:4px;
 }
 
-img {
-  display:block;
-  width:100%;
-  object-fit:cover;
-}
-
 h1, h2, h3, p {
   margin:0;
 }
@@ -213,14 +207,20 @@ dl {
 }
 
 dt {
-  font-size:11px;
-  text-align:center;
-  padding:3px;
+  min-width:0;
+  padding:8px 12px;
+  border:1px solid var(--body-line);
+  border-left:2px solid var(--group-color,var(--accent2));
+  font:700 11px/1.5 var(--sans);
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  text-align:left;
+  overflow-wrap:anywhere;
 }
 
 dd {
   margin:0;
-  text-align:center;
+  text-align:left;
   padding:7px 2px;
   font-size:13px;
 }
@@ -680,8 +680,8 @@ body {
 }
 
 dt {
-  background:linear-gradient(90deg,#151515,var(--accent1));
-  color:#fff;
+  background:rgb(128 128 128 / .1);
+  color:var(--group-color,var(--accent2));
 }
 
 .avatar {
@@ -3377,7 +3377,14 @@ html[data-theme=light] .roses-live{--body:#eee;--neutral:#fff;--neutralDark:#f5f
 .roses-live .rose-pa :is(a,button,label),.roses-live .rose-index-tools a,.roses-live .rose-register a,.roses-live .rose-forum a{font-weight:inherit}
 .roses-live .rose-pa button{border-radius:0}
 .roses-live .exchange-converter input{background:none;border-radius:0}
-.rose-forum-description{font:14px/1.65 var(--sans);color:#e2e2e2;margin-top:13px}
+.rose-forum-description{font:14px/1.65 var(--sans);color:#e2e2e2;margin-top:13px;min-height:0;max-height:100px;overflow-y:auto;overflow-x:hidden;overflow-wrap:anywhere;padding-right:8px;scrollbar-width:thin;scrollbar-color:var(--accent2) transparent}
+@media(min-width:781px){
+ .rose-body .rose-forum{height:175px;grid-template-rows:minmax(0,1fr) auto}
+ .rose-forum-copy{display:flex;flex-direction:column;align-self:stretch;min-height:0;padding:20px 28px 12px}
+ .rose-forum-top{flex-shrink:0;margin-bottom:0}
+ .rose-forum-description{flex:1;max-height:none}
+ .rose-forum-subs{max-height:48px;overflow-y:auto;padding-bottom:12px;scrollbar-width:thin;scrollbar-color:var(--accent2) transparent}
+}
 .rose-forum-description p{font:inherit}
 .rose-body .rose-forum .subforums a{display:flex;align-items:baseline;gap:8px;background:none;border:0;border-bottom:1px solid var(--body-line);padding:0 0 3px;font:13px/1.5 var(--sans);color:#eee}
 .rose-body .rose-forum .subforums a:hover{color:var(--accent2)}
@@ -3390,7 +3397,6 @@ html[data-theme=light] .roses-live{--body:#eee;--neutral:#fff;--neutralDark:#f5f
 .rose-last-native a[href*="view=newest"]{display:inline-block}
 .rose-last-native img{display:inline-block;width:auto;max-height:12px}
 .rose-forum{position:relative}
-.rose-forum-status{position:absolute;width:10px;height:10px;right:5px;bottom:5px;object-fit:contain}
 .rose-category-head h2 a{font:inherit;color:inherit}
 .rose-body .rose-category-head h2{margin-bottom:0;text-align:left}
 .roses-live .side-rail.sidebar{height:auto;top:auto;max-height:calc(100vh - 44px);z-index:100;overflow:visible}
