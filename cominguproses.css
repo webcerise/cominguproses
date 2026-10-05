@@ -3445,9 +3445,9 @@ html[data-theme=light] #truesight{--ts-surface:#f3f3f3;color:#242424}
 
 .rose-qeel-credits{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:22px 28px;border-top:1px solid var(--frame-line)}
 .nian-signature{display:flex;align-items:center;gap:10px;color:var(--accent2)}
-.nian-signature small{font:10px var(--couture-sans);letter-spacing:.12em;text-transform:uppercase}
+.nian-signature small{font:15px var(--couture-sans);letter-spacing:.12em;text-transform:uppercase;padding-top:15px}
 .nian-signature strong{font:48px/.8 var(--script);font-weight:400}
-.rose-qeel-credits button,.rose-footer-credits{display:flex;align-items:center;gap:10px;background:none;border:0;border-radius:0;padding:6px 0;color:var(--ivory);font:11px var(--couture-sans);text-transform:uppercase;cursor:pointer}
+.rose-qeel-credits button,.rose-footer-credits{display:flex;align-items:flex-end;gap:10px;background:none;border:0;border-radius:0;padding:6px 0;color:var(--ivory);font:15px var(--couture-sans);text-transform:uppercase;cursor:pointer}
 .rose-qeel-credits button:hover,.rose-footer-credits:hover{color:var(--accent2)}
 .rose-footer-credits{margin:16px auto}
 #rose-credits{position:fixed;inset:0;margin:auto;width:min(480px,calc(100vw - 32px));max-width:none;max-height:80vh;padding:0;border:1px solid var(--frame-line);border-radius:0;background:#151515;color:#eaeaea;box-shadow:0 20px 80px rgb(0 0 0 / .5)}
