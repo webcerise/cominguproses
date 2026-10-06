@@ -29,30 +29,16 @@ function filtered(){const q=$('search').value.normalize('NFD').replace(/[\u0300-
 function renderPins(){
   markers.forEach(marker=>marker.remove());markers=[];
   if(!map)return;
-  const groups=[];
   for(const place of filtered()){
-    const position=map.project([place.lng,place.lat]);
-    const group=map.getZoom()<18?groups.find(item=>Math.hypot(item.x-position.x,item.y-position.y)<58):null;
-    if(group){group.places.push(place)}else groups.push({x:position.x,y:position.y,places:[place]});
-  }
-  for(const group of groups){
-    const entries=group.places,first=entries[0],cluster=entries.length>1;
-    const pin=el('button',undefined,cluster?'pin pin-cluster':'pin');pin.type='button';
-    pin.title=cluster?entries.length+' lieux — zoomer':first.name;pin.setAttribute('aria-label',pin.title);
-    pin.style.setProperty('--place-color',placeColor(first));
-    if(cluster){
-      const counts=new Map();entries.forEach(p=>counts.set(placeColor(p),(counts.get(placeColor(p))||0)+1));let offset=0;
-      const stops=[...counts].map(([color,count])=>{const start=offset;offset+=count/entries.length*100;return color+' '+start+'% '+offset+'%'});
-      pin.style.setProperty('--cluster-ring','conic-gradient('+stops.join(',')+')');pin.classList.toggle('pin-mixed',counts.size>1);pin.append(el('span',String(entries.length)));
-    }else pin.append(el('i',undefined,'ph-thin ph-'+first.icon));
-    const lng=entries.reduce((sum,p)=>sum+p.lng,0)/entries.length,lat=entries.reduce((sum,p)=>sum+p.lat,0)/entries.length;
+    const pin=el('button',undefined,'pin');pin.type='button';
+    pin.title=place.name;pin.setAttribute('aria-label',pin.title);
+    pin.style.setProperty('--place-color',placeColor(place));
+    pin.append(el('i',undefined,'ph-thin ph-'+place.icon));
     pin.addEventListener('click',event=>{
       event.stopPropagation();
-      if(!cluster){showPlace(first);return}
-      const bounds=new maplibregl.LngLatBounds();entries.forEach(p=>bounds.extend([p.lng,p.lat]));
-      map.fitBounds(bounds,{padding:90,maxZoom:Math.min(map.getZoom()+2,18),duration:motion?550:0});
+      showPlace(place);
     });
-    markers.push(new maplibregl.Marker({element:pin}).setLngLat([lng,lat]).addTo(map));
+    markers.push(new maplibregl.Marker({element:pin}).setLngLat([place.lng,place.lat]).addTo(map));
   }
 }
 function render(){
