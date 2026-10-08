@@ -2873,6 +2873,7 @@ body { background:#0b0b0b;
 .pinterest-photo { flex-shrink:0;
   background:linear-gradient(125deg,var(--accent1),var(--accent2));
   overflow:hidden; }
+.pinterest-photo picture { display:block; }
 .pinterest-photo img { display:block;
   width:100%;
   height:auto;
