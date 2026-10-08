@@ -2286,7 +2286,7 @@ html:is([data-theme=dark],[data-theme=light]) .society-header .main-nav {
     text-align:left; }
   .rose-last .last-post-title, .rose-last .last-author { text-align:left; }
 }
-.rose-body, .rose-body button, .rose-body a, .rose-body p, .rose-body span, .rose-body small, .rose-body time { text-transform:lowercase; }
+.rose-body, .rose-body button, .rose-body a, .rose-body p, .rose-body small, .rose-body time { text-transform:lowercase; }
 .rose-body h2, .rose-body h3, .rose-body .forum-title a, .rose-body .rose-shortcuts span, .rose-body .rose-index-tools>span { text-transform:uppercase; }
 .rose-body h2 em, .header-brand>p, footer { text-transform:lowercase; }
 .rose-body .rose-category-head h2 { font-size:clamp(28px,3vw,40px); }
@@ -2528,8 +2528,6 @@ body:before { background:linear-gradient(135deg,rgb(112 38 56/.55),rgb(196 166 1
 .rose-pa-weather { grid-column:3;
   grid-row:1;
   padding:30px;
-  border-left:1px solid var(--frame-line);
-  border-bottom:1px solid var(--body-line);
   align-self:stretch;
   display:flex;
   flex-direction:column;
@@ -2542,7 +2540,7 @@ body:before { background:linear-gradient(135deg,rgb(112 38 56/.55),rgb(196 166 1
   margin:15px 0 8px; }
 .rose-pa-weather i { font-size:42px;
   color:var(--accent2); }
-.rose-pa-weather strong { font:64px/1 var(--serif);
+.rose-pa-weather strong { font:50px/1 var(--serif);
   color:var(--ink); }
 .rose-pa-weather p { font-size:15px;
   color:#eee; }
@@ -3520,6 +3518,35 @@ html[data-theme=light] .roses-live{--body:#eee;--neutral:#fff;--neutralDark:#f5f
 .roses-live .side-rail.sidebar{height:auto;top:auto;max-height:calc(100vh - 44px);z-index:100;overflow:visible}
 .roses-live .sidebar_top{display:flex;flex-direction:column;align-items:center;gap:18px}
 .roses-live .side-rail .button{background:none;border:0;padding:0;width:26px;height:26px}
+.roses-live .rail-quicklinks{display:flex;align-items:center;justify-content:center;color:var(--ivory);cursor:pointer}
+.roses-live .rail-quicklinks:hover,.roses-live .rail-quicklinks[aria-expanded=true]{color:var(--accent2)}
+html.rose-quicklinks-open{overflow:hidden;scrollbar-gutter:stable}
+#rose-quicklinks{position:fixed;inset:0 auto 0 0;width:min(420px,100vw);height:100vh;height:100dvh;max-width:none;max-height:none;margin:0;padding:12px;box-sizing:border-box;border:1px solid var(--frame-line);border-radius:0;background:linear-gradient(145deg,rgb(24 24 24/.97),rgb(10 10 10/.95));color:var(--ivory);box-shadow:16px 0 55px rgb(0 0 0/.25);overflow:hidden;transform:translateX(-100%);transition:transform .24s cubic-bezier(.2,.7,.3,1);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+#rose-quicklinks::before{content:"";position:absolute;inset:11px;border:1px solid var(--frame-soft);pointer-events:none}
+#rose-quicklinks:not([open]){display:none}
+#rose-quicklinks[open]{display:flex;flex-direction:column}
+#rose-quicklinks.is-open{transform:translateX(0)}
+#rose-quicklinks::backdrop{background:rgb(0 0 0/.4)}
+.rose-quicklinks-heading{position:relative;flex-shrink:0;padding:30px 26px 28px}
+.rose-quicklinks-heading h2{width:max-content;max-width:100%;margin:0;color:var(--ivory);font-synthesis:none;text-align:left}
+.rose-quicklinks-heading h2 span{display:block;font:48px/1 var(--serif);text-transform:lowercase;letter-spacing:-.04em}
+.rose-quicklinks-heading h2 em{display:block;margin:-35px 0 0 0;font:78px/.95 var(--script);text-transform:lowercase;letter-spacing:0;color:var(--accent2)}
+#rose-quicklinks .rose-quicklinks-heading button{position:absolute;top:14px;right:14px;display:flex;align-items:center;justify-content:center;width:30px;height:30px;margin:0;padding:0;border:1px solid var(--frame-soft);background:none;color:var(--muted);cursor:pointer;transition:color .2s,border-color .2s}
+#rose-quicklinks .rose-quicklinks-heading button:hover{color:var(--accent2)}
+.rose-quicklinks-heading i{font-size:23px;line-height:1}
+.rose-quicklinks-list{flex:1;min-height:0;margin:0 6px 6px;padding:0 20px 24px;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:var(--accent2) transparent}
+.rose-quicklinks-list section{display:grid;grid-template-columns:minmax(0,1fr);gap:0 22px;margin:0;padding:0 0 28px;border:0}
+.rose-quicklinks-list section:last-child{padding-bottom:0}
+.rose-quicklinks-list h3{display:flex;align-items:center;gap:16px;grid-column:1/-1;margin:0 0 12px;padding:0;background:none;color:var(--accent2);font:21px/1.2 var(--serif);text-transform:uppercase;letter-spacing:-.025em}
+.rose-quicklinks-list h3::after{content:"";flex:1;height:1px;background:var(--frame-soft)}
+#rose-quicklinks .rose-quicklinks-list a{display:block;position:relative;min-width:0;padding:12px 0;border-bottom:1px solid var(--frame-soft);font:13px/1.4 var(--couture-sans);letter-spacing:.025em;text-transform:lowercase;text-decoration:none;overflow-wrap:anywhere;color:var(--ivory);transition:color .2s,border-color .2s}
+#rose-quicklinks .rose-quicklinks-list a::after{content:"";position:absolute;right:0;top:50%;width:18px;height:1px;background:var(--accent2);transform:scaleX(0);transform-origin:right;transition:transform .25s}
+#rose-quicklinks .rose-quicklinks-list a:hover,#rose-quicklinks .rose-quicklinks-list a:focus-visible{color:var(--accent2);border-color:var(--frame-line)}
+#rose-quicklinks .rose-quicklinks-list a:hover::after,#rose-quicklinks .rose-quicklinks-list a:focus-visible::after{transform:scaleX(1)}
+html[data-theme=light] #rose-quicklinks{background:linear-gradient(145deg,rgb(255 255 255/.97),rgb(239 239 239/.95));color:#242424;box-shadow:16px 0 55px rgb(0 0 0/.1)}
+html[data-theme=light] #rose-quicklinks .rose-quicklinks-heading h2 em,html[data-theme=light] #rose-quicklinks .rose-quicklinks-list h3{color:var(--accent1)}
+html[data-theme=light] #rose-quicklinks .rose-quicklinks-list a:hover,html[data-theme=light] #rose-quicklinks .rose-quicklinks-list a:focus-visible{color:var(--accent1)}
+@media(prefers-reduced-motion:reduce){#rose-quicklinks,#rose-quicklinks .rose-quicklinks-list a,#rose-quicklinks .rose-quicklinks-list a::after,#rose-quicklinks .rose-quicklinks-heading button{transition:none}}
 .roses-live #notiffi_button{cursor:pointer;padding:0;height:28px;border-bottom:0}
 .roses-live #notiffi_button .myface-tooltip{display:none}
 .roses-live #switcheroo:empty{display:none}
