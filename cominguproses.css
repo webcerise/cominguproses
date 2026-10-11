@@ -3898,3 +3898,65 @@ html[data-theme=light] .roses-live #userwayAccessibilityIcon{box-shadow:0 5px 18
 @media(max-width:700px){.cur-maker{margin-top:30px}.cur-maker-heading h1 em{display:block;margin:8px 0 0;font-size:60px}.cur-maker-section{grid-template-columns:minmax(0,1fr);gap:22px}.cur-maker-section>header{display:flex;align-items:baseline;gap:14px}.cur-maker .cur-maker-section h2{margin:0}.cur-maker-actions{align-items:flex-start;flex-direction:column}}
 @media(max-width:450px){.cur-maker-fields{grid-template-columns:minmax(0,1fr)}.cur-maker-heading{padding-bottom:30px}.cur-maker .cur-maker-heading h1{font-size:34px}.cur-maker-heading h1 em{font-size:52px}}
 @media(prefers-reduced-motion:reduce){.cur-maker-color button,.cur-maker .cur-maker-actions button{transition:none}}
+
+/* BOTTINS — registre unique, un message par onglet */
+.rose-register-layout{--register-line:color-mix(in srgb,var(--ivory) 13%,transparent);--register-ink:var(--ivory);--register-muted:var(--muted);min-width:0}
+.rose-register-layout.page-tab{display:block}
+.roses-live .rose-register-topic>.poster-list{display:none}
+.roses-live .rose-register-layout.page-tab>.post{grid-template-columns:minmax(0,1fr);margin:0;padding:0;border:0;border-radius:0;background:none;backdrop-filter:none;min-width:0;--group-color:var(--accent2)}
+.rose-register-layout>.post[hidden]{display:none!important}
+.rose-register-layout.page-tab :is(.post-person,.post_profile,.post-bar,.post_details,.post-signature,.post_signature){display:none}
+.roses-live .rose-register-layout.page-tab .post-writing{grid-column:1;grid-row:auto;padding:0;margin:0;min-height:0;max-width:100%;width:auto}
+.rose-register-layout :is(.rose-register,.rose-bottin){color:var(--register-ink);font:12px/1.65 var(--sans);text-transform:none;text-align:left;border:0}
+.rose-register-layout.page-tab .rose-register{display:grid;grid-template-columns:minmax(0,1fr) 250px;align-items:center;gap:14px 24px;padding:0 0 28px}
+.rose-register-heading{grid-column:1;grid-row:1;margin:0;padding:0;border:0}
+.rose-register-heading>span{display:none}
+.rose-register .rose-register-heading h2{margin:0;padding:0;border:0;color:var(--register-ink);font:400 23px/1.2 var(--serif);text-transform:lowercase;letter-spacing:-.025em}
+.rose-register .rose-register-heading h2 em{display:inline;margin:0;font:inherit;color:inherit;letter-spacing:inherit;text-transform:inherit}
+.rose-register-find{grid-column:2;grid-row:1;display:flex;align-items:center;gap:8px;margin:0;padding:7px 0;border-bottom:1px solid var(--register-line);color:var(--register-muted)}
+.rose-register-find>i{flex-shrink:0;font-size:17px}
+.roses-live .rose-register .rose-register-search{width:100%;min-width:0;margin:0;padding:0;border:0;border-radius:0;background:none;box-shadow:none;font:11px/1.6 var(--sans);color:var(--register-ink);text-transform:none}
+.rose-register-search::placeholder{color:var(--register-muted);opacity:.8}
+.rose-register-search:focus-visible{outline:1px solid var(--accent2);outline-offset:4px}
+.rose-register-nav{grid-column:1/-1;grid-row:2;display:flex;align-items:center;flex-wrap:wrap;gap:0 26px;margin:0;padding:0;border-bottom:1px solid var(--register-line)}
+.rose-register .rose-register-nav button{display:block;flex:0 0 auto;width:auto;margin:0 0 -1px;padding:12px 0;border:0;border-bottom:1px solid transparent;border-radius:0;background:none;box-shadow:none;color:var(--register-muted);text-align:left;font:11px/1.4 var(--couture-sans);letter-spacing:.04em;text-transform:uppercase;cursor:pointer;transition:color .2s,border-color .2s}
+.rose-register-nav :is(small,i){display:none}
+.rose-register .rose-register-nav button.active{border-bottom-color:var(--accent2);color:var(--register-ink)}
+.rose-register .rose-register-nav button:hover{color:var(--register-ink)}
+.rose-register .rose-register-nav button:disabled{opacity:.4;cursor:default}
+.rose-register-nav button:focus-visible{outline:1px solid var(--accent2);outline-offset:4px}
+.rose-register-summary{grid-column:1;grid-row:3;margin:0;color:var(--register-muted);font:10px/1.5 var(--sans);text-transform:lowercase}
+.rose-register-tools{grid-column:2;grid-row:3;display:flex;justify-content:flex-end;flex-wrap:wrap;gap:8px 16px;margin:0;padding:0;border:0}
+.rose-register .rose-register-tools :is(a,button){display:inline-flex;align-items:center;gap:5px;width:fit-content;margin:0;padding:0;border:0;border-radius:0;background:none;box-shadow:none;font:10px/1.5 var(--sans);color:var(--register-muted);text-transform:lowercase;text-decoration:none;cursor:pointer}
+.rose-register .rose-register-tools :is(a,button):hover{color:var(--register-ink)}
+.rose-register-tools i{font-size:14px}
+.rose-register-tools :is(a,button):focus-visible{outline:1px solid var(--accent2);outline-offset:4px}
+.rose-register-errors{grid-column:1/-1;margin:0;color:var(--register-ink);font:11px/1.6 var(--sans)}
+.rose-register-errors summary{color:var(--accent2);cursor:pointer}
+.rose-register-errors>div{margin-top:8px}
+.rose-register-source:not([hidden]){grid-column:1/-1;margin-top:20px;padding-top:14px;border-top:1px solid var(--register-line);overflow-wrap:anywhere}
+.rose-register-entry{padding:8px 0;border-bottom:1px solid var(--register-line);font:12px/1.7 var(--sans)}
+.rose-bottin .rose-bottin-heading{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin:0 0 24px;padding:0 0 16px;border-bottom:1px solid var(--register-line)}
+.rose-bottin .rose-bottin-heading h2{margin:0;padding:0;border:0;color:var(--register-ink);font:400 28px/1.2 var(--serif);text-transform:lowercase;letter-spacing:-.025em}
+.rose-bottin-count{flex-shrink:0;color:var(--register-muted);font:10px/1.5 var(--sans);text-transform:lowercase}
+.rose-bottin-category+.rose-bottin-category{margin-top:28px}
+.rose-bottin .rose-bottin-category>h3{margin:0 0 16px;padding:0 0 8px;border:0;border-bottom:1px solid var(--register-line);font:11px/1.5 var(--couture-sans);color:var(--register-ink);text-transform:uppercase;letter-spacing:.04em}
+.rose-bottin-letter{display:grid;grid-template-columns:48px minmax(0,1fr);align-items:start;gap:20px;margin:0 0 20px}
+.rose-bottin .rose-bottin-letter>h3{margin:0;padding:5px 0 0;border:0;color:color-mix(in srgb,var(--register-ink) 60%,transparent);font:400 46px/1 var(--serif);text-transform:uppercase;letter-spacing:-.04em}
+.rose-bottin-list{min-width:0;padding:0}
+.rose-bottin-entry{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);align-items:baseline;gap:18px;margin:0;padding:11px 0;border:0;border-bottom:1px solid var(--register-line);overflow-wrap:anywhere}
+.rose-bottin .rose-bottin-entry h4{margin:0;padding:0;border:0;color:var(--register-ink);font:500 12px/1.6 var(--sans);text-transform:none;letter-spacing:0}
+.rose-bottin-members{display:flex;flex-direction:column;gap:8px;min-width:0}
+.rose-bottin-person{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 10px;min-width:0}
+.rose-bottin .rose-bottin-member{font:400 12px/1.6 var(--sans);color:var(--register-ink);text-transform:none;text-decoration:none}
+.rose-bottin a.rose-bottin-member:hover{text-decoration:underline;text-underline-offset:3px}
+.rose-bottin-character{flex-basis:100%;color:var(--register-muted);font:11px/1.6 var(--sans);text-transform:none}
+.rose-bottin-status{color:var(--register-muted);font:10px/1.6 var(--sans);text-transform:lowercase}
+.rose-bottin-person:has(.rose-bottin-status) .rose-bottin-character{order:2}
+.rose-bottin[onglet=domiciles] .rose-bottin-entry{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr)}
+.rose-bottin-empty{padding:18px 0;color:var(--register-muted);font:12px/1.7 var(--sans)}
+.rose-register-normal .rose-register-find{max-width:300px;margin:16px 0}
+.rose-register-normal .rose-register-summary{margin:12px 0}
+.rose-register-normal .rose-register-tools{justify-content:flex-start;margin-top:16px}
+@media(max-width:600px){.rose-register-layout.page-tab .rose-register{grid-template-columns:minmax(0,1fr);gap:12px;padding-bottom:24px}.rose-register-find{grid-column:1;grid-row:2;max-width:none}.rose-register-nav{grid-row:3;gap:0 18px}.rose-register-summary{grid-row:4}.rose-register-tools{grid-column:1;grid-row:5;justify-content:flex-start}.rose-bottin .rose-bottin-heading h2{font-size:25px}.rose-bottin-letter{grid-template-columns:32px minmax(0,1fr);gap:14px}.rose-bottin .rose-bottin-letter>h3{font-size:36px}.rose-bottin-entry,.rose-bottin[onglet=domiciles] .rose-bottin-entry{grid-template-columns:minmax(0,1fr);gap:5px;padding:10px 0}}
+@media(prefers-reduced-motion:reduce){.rose-register-nav button{transition:none}}
