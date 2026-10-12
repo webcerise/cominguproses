@@ -63,8 +63,57 @@ function createIconPicker(){
   $('icon').addEventListener('change',syncIconPicker);$('zone').addEventListener('change',syncIconPicker);
   syncIconPicker();
 }
+function createResidenceTools(){
+  const filters=el('div',undefined,'residence-filters');filters.id='residence-filters';filters.setAttribute('role','group');filters.setAttribute('aria-label','Afficher ou masquer les résidences');
+  for(const [value,label] of Object.entries({all:'Tout',only:'Résidences uniquement',hide:'Sans résidences'})){
+    const button=el('button',label);button.type='button';button.dataset.residences=value;button.setAttribute('aria-pressed',String(value==='all'));
+    button.onclick=()=>{residenceMode=value;for(const item of filters.children)item.setAttribute('aria-pressed',String(item===button));render()};filters.append(button);
+  }
+  $('filters').after(filters);
+  const toggle=el('label',undefined,'residential-toggle'),checkbox=el('input');checkbox.id='residential';checkbox.type='checkbox';checkbox.addEventListener('change',()=>syncResidenceEditor(true));
+  toggle.append(checkbox,el('span','Domicile de membres'));
+  const residents=el('fieldset',undefined,'residents-editor');residents.id='residents-editor';residents.hidden=true;residents.disabled=true;residents.append(el('legend','Résidents'));
+  const entries=el('div');entries.id='resident-fields';residents.append(entries);
+  const add=el('button','Ajouter un résident','add-resident');add.type='button';add.append(el('i',undefined,'ph-thin ph-plus'));add.onclick=()=>addResidentFields();residents.append(add);
+  $('type').closest('label').after(toggle,residents);
+}
+function syncResidenceEditor(suggest=false){
+  const enabled=$('residential').checked;$('residents-editor').hidden=!enabled;$('residents-editor').disabled=!enabled;
+  if(enabled&&suggest){
+    if(!$('type').value.trim())$('type').value='Résidence';
+    if($('icon').value==='map-pin'){$('icon').value='house';syncIconPicker()}
+  }
+}
+function addResidentFields(resident={}){
+  const entry=el('div',undefined,'resident-entry'),heading=el('div',undefined,'resident-entry-heading');
+  heading.append(el('span','Résident'));
+  const remove=el('button');remove.type='button';remove.setAttribute('aria-label','Retirer ce résident');remove.title='Retirer ce résident';remove.append(el('i',undefined,'ph-thin ph-x'));remove.onclick=()=>entry.remove();heading.append(remove);entry.append(heading);
+  for(const [key,label,placeholder,limit] of [
+    ['name','Nom du personnage','Prénom Nom',100],['image','Photo (URL)','https://…',2000],
+    ['profile','Lien du profil','/u42 ou https://…',2000],['note','Indication','Appartement 3, Propriétaire, Résident…',120]
+  ]){
+    const field=el('label',label),input=el('input');input.type=key==='image'?'url':'text';input.dataset.residentField=key;input.placeholder=placeholder;input.maxLength=limit;input.required=key==='name';input.value=resident[key]||'';field.append(input);entry.append(field);
+  }
+  $('resident-fields').append(entry);
+}
+function readResidentFields(){return Array.from($('resident-fields').children,entry=>Object.fromEntries(Array.from(entry.querySelectorAll('[data-resident-field]'),input=>[input.dataset.residentField,input.value.trim()]))).filter(resident=>resident.name)}
+function renderResidents(place,copy){
+  if(!place.residential||!place.residents.length)return;
+  const section=el('section',undefined,'place-residents');section.append(el('h3','À cette adresse'));
+  for(const resident of place.residents){
+    const row=el(resident.profile?'a':'div',undefined,'place-resident');
+    if(resident.profile){row.href=resident.profile;row.target='_blank';row.rel='noopener'}
+    const avatar=el('span',undefined,'resident-avatar');
+    const initial=el('span',resident.name.split(/\s+/).slice(0,2).map(word=>word[0]).join('').toUpperCase(),'resident-initial');
+    if(resident.image){const image=el('img');image.src=resident.image;image.alt='';image.loading='lazy';image.addEventListener('error',()=>image.replaceWith(initial),{once:true});avatar.append(image)}else avatar.append(initial);
+    const text=el('span',undefined,'resident-copy');text.append(el('strong',resident.name));if(resident.note)text.append(el('small',resident.note));row.append(avatar,text);
+    if(resident.profile){const arrow=el('i',undefined,'ph-thin ph-arrow-up-right');arrow.setAttribute('aria-hidden','true');row.append(arrow)}
+    section.append(row);
+  }
+  copy.append(section);
+}
 function placeColor(p){return zones[p.zone]?.color||'#c4a66b'}
-function placeLabel(p){return [p.type,zones[p.zone]?.label].filter(Boolean).join(' · ')}
+function placeLabel(p){return [p.type,zones[p.zone]?.label,p.residential?'domicile de membres':''].filter(Boolean).join(' · ')}
 function inferZone(p){return p.lng<-.19?'west':p.lat<51.49?'south':p.lng>-.085?'east':p.lat>51.535?'north':'central'}
 function fitPlaces(duration=0){if(!map||!places.length)return;const bounds=new maplibregl.LngLatBounds();places.forEach(p=>bounds.extend([p.lng,p.lat]));const desktop=innerWidth>850;map.fitBounds(bounds,{padding:{top:130,bottom:80,left:desktop&&!$('directory').hidden?390:60,right:desktop&&editing&&!$('editor').hidden?390:60},maxZoom:14,duration})}
 const dataSource=document.querySelector('meta[name="rose-map-data"]')?.content;
@@ -75,16 +124,28 @@ function readPlaces(text){
   if(!block)throw Error('La page des lieux doit contenir le bloc map-data.');
   return JSON.parse(block.textContent);
 }
-function exportPage(){return '<!doctype html>\n<html lang="fr"><head><meta charset="utf-8"><title>Lieux de Londres</title></head><body>\n<script type="application/json" id="map-data">\n'+JSON.stringify({version:2,places},null,2).replace(/</g,'\\u003c')+'\n</script>\n</body></html>'}
+function exportPage(){return '<!doctype html>\n<html lang="fr"><head><meta charset="utf-8"><title>Lieux de Londres</title></head><body>\n<script type="application/json" id="map-data">\n'+JSON.stringify({version:3,places},null,2).replace(/</g,'\\u003c')+'\n</script>\n</body></html>'}
 const KEY='roses-london-draft-v1',CACHE='roses-geocode-v1';
-let places=[],publishedPlaces=[],markers=[],map,draftMarker,active='all',selectedId,lastRequest=0,searchBusy=false,dataLoadError='';
+let places=[],publishedPlaces=[],markers=[],map,draftMarker,active='all',residenceMode='all',selectedId,lastRequest=0,searchBusy=false,dataLoadError='';
 const motion=!matchMedia('(prefers-reduced-motion: reduce)').matches;
 function message(text){$('status').textContent=text}
 function el(tag,text,className){const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(className)n.className=className;return n}
-function safeURL(value){if(!value)return '';try{const u=new URL(value);return ['https:','http:'].includes(u.protocol)?u.href:''}catch{return ''}}
-function validate(data){if(!data||!Array.isArray(data.places)||data.places.length>500)throw Error('Fichier invalide : 500 lieux maximum.');const ids=new Set();return data.places.map(p=>{if(!p||!p.id||ids.has(String(p.id))||typeof p.name!=='string'||!p.name.trim()||!Object.hasOwn(categories,p.category||'lieu')||(p.zone&&!Object.hasOwn(zones,p.zone))||!Number.isFinite(p.lng)||!Number.isFinite(p.lat)||p.lng<-.55||p.lng>.35||p.lat<51.25||p.lat>51.75)throw Error('Un lieu est invalide ou situé hors de Londres.');ids.add(String(p.id));return {id:String(p.id),name:p.name.slice(0,100),category:p.category||'lieu',zone:p.zone||inferZone(p),type:String(p.type||categories[p.category||'lieu']).slice(0,80),icon:Object.hasOwn(iconOptions,p.icon)?p.icon:legacyIcons[p.category||'lieu'],address:String(p.address||'').slice(0,250),description:String(p.description||'').slice(0,1500),lng:p.lng,lat:p.lat,image:safeURL(p.image),link:safeURL(p.link),example:!!p.example,positionPrecision:['building','street','postcode'].includes(p.positionPrecision)?p.positionPrecision:'building'}})}
-function persist(){if(!editing)return;try{localStorage.setItem(KEY,JSON.stringify({version:2,places}));message('Brouillon enregistré sur cet appareil. Exportez pour publier.')}catch{message('Stockage local indisponible : exportez pour conserver vos lieux.')}}
-function filtered(){const q=$('search').value.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();return places.filter(p=>(active==='all'||p.zone===active)&&(p.name+' '+p.address+' '+p.description+' '+placeLabel(p)).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().includes(q))}
+function safeURL(value,base){if(!value)return '';try{const u=new URL(value,base);return ['https:','http:'].includes(u.protocol)?u.href:''}catch{return ''}}
+function validateResidents(value){
+  if(value===undefined)return [];
+  if(!Array.isArray(value))throw Error('La liste des résidents est invalide.');
+  return value.map(resident=>{
+    if(!resident||typeof resident.name!=='string'||!resident.name.trim())throw Error('Chaque résident doit avoir un nom.');
+    const image=safeURL(resident.image),profile=safeURL(resident.profile,'https://cominguproses.forumactif.com/');
+    if(resident.image&&!image)throw Error('L’adresse de la photo d’un résident est invalide.');
+    if(resident.profile&&!profile)throw Error('Le lien de profil d’un résident est invalide.');
+    return {name:resident.name.trim().slice(0,100),image,profile,note:String(resident.note||'').trim().slice(0,120)};
+  });
+}
+function validate(data){if(!data||!Array.isArray(data.places)||data.places.length>500)throw Error('Fichier invalide : 500 lieux maximum.');const ids=new Set();return data.places.map(p=>{if(!p||!p.id||ids.has(String(p.id))||typeof p.name!=='string'||!p.name.trim()||!Object.hasOwn(categories,p.category||'lieu')||(p.zone&&!Object.hasOwn(zones,p.zone))||(p.residential!==undefined&&typeof p.residential!=='boolean')||!Number.isFinite(p.lng)||!Number.isFinite(p.lat)||p.lng<-.55||p.lng>.35||p.lat<51.25||p.lat>51.75)throw Error('Un lieu est invalide ou situé hors de Londres.');ids.add(String(p.id));return {id:String(p.id),name:p.name.slice(0,100),category:p.category||'lieu',zone:p.zone||inferZone(p),type:String(p.type||categories[p.category||'lieu']).slice(0,80),icon:Object.hasOwn(iconOptions,p.icon)?p.icon:legacyIcons[p.category||'lieu'],address:String(p.address||'').slice(0,250),description:String(p.description||'').slice(0,1500),lng:p.lng,lat:p.lat,image:safeURL(p.image),link:safeURL(p.link),residential:p.residential===undefined?p.category==='residence':p.residential,residents:validateResidents(p.residents),example:!!p.example,positionPrecision:['building','street','postcode'].includes(p.positionPrecision)?p.positionPrecision:'building'}})}
+function clonePlaces(rows){return rows.map(place=>({...place,residents:place.residents.map(resident=>({...resident}))}))}
+function persist(){if(!editing)return;try{localStorage.setItem(KEY,JSON.stringify({version:3,places}));message('Brouillon enregistré sur cet appareil. Exportez pour publier.')}catch{message('Stockage local indisponible : exportez pour conserver vos lieux.')}}
+function filtered(){const q=$('search').value.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();return places.filter(p=>(active==='all'||p.zone===active)&&(residenceMode==='all'||(residenceMode==='only'?p.residential:!p.residential))&&(p.name+' '+p.address+' '+p.description+' '+placeLabel(p)+' '+(p.residential?p.residents.map(resident=>resident.name+' '+resident.note).join(' '):'')).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().includes(q))}
 function renderPins(){
   markers.forEach(marker=>marker.remove());markers=[];
   if(!map)return;
@@ -102,17 +163,18 @@ function renderPins(){
 }
 function render(){
   const rows=filtered();$('count').textContent=dataLoadError?'Lieux indisponibles':rows.length+' adresse'+(rows.length===1?'':'s');$('places').replaceChildren();
+  if(selectedId&&!rows.some(p=>p.id===selectedId)){$('detail').hidden=true;selectedId=undefined}
   if(!rows.length)$('places').append(el('p',dataLoadError?'Les lieux sont temporairement indisponibles.':'Aucune adresse pour cette recherche.','empty'));
   rows.forEach(p=>{const row=el('button',undefined,'place-row');row.type='button';row.style.setProperty('--place-color',placeColor(p));const icon=el('span',undefined,'place-symbol');icon.append(el('i',undefined,'ph-thin ph-'+p.icon));row.append(icon);const content=el('div');content.append(el('strong',p.name),el('small',placeLabel(p)+(p.example?' · exemple':'')));row.append(content);row.addEventListener('click',()=>showPlace(p));$('places').append(row)});
   renderPins();
 }
-function showPlace(p){selectedId=p.id;const box=$('detail-content');$('detail').style.setProperty('--place-color',placeColor(p));box.replaceChildren();if(p.image){const img=el('img');img.src=p.image;img.alt='';img.addEventListener('error',()=>img.remove());box.append(img)}const copy=el('div',undefined,'detail-copy');const symbol=el('span',undefined,'detail-symbol');symbol.append(el('i',undefined,'ph-thin ph-'+p.icon));copy.append(symbol,el('small',placeLabel(p)+(p.example?' · exemple':'')),el('h2',p.name),el('p',p.address),el('p',p.description));if(p.link){const a=el('a','Ouvrir sur le forum ↗');a.href=p.link;a.target='_blank';a.rel='noopener';copy.append(a)}if(editing){const edit=el('button','Modifier');edit.onclick=()=>editPlace(p);const remove=el('button','Supprimer');remove.onclick=()=>{if(!confirm('Supprimer « '+p.name+' » du brouillon ?'))return;places=places.filter(x=>x.id!==p.id);persist();render();$('detail').hidden=true};copy.append(edit,remove)}box.append(copy);$('detail').hidden=false;map?.easeTo({center:[p.lng,p.lat],zoom:16,padding:{left:innerWidth>850?350:0,right:editing&&innerWidth>850?350:0},duration:motion?700:0});if(innerWidth<850)$('directory').hidden=true;if(editing)$('editor').hidden=true}
+function showPlace(p){selectedId=p.id;const box=$('detail-content');$('detail').style.setProperty('--place-color',placeColor(p));box.replaceChildren();if(p.image){const img=el('img');img.src=p.image;img.alt='';img.addEventListener('error',()=>img.remove());box.append(img)}const copy=el('div',undefined,'detail-copy');const symbol=el('span',undefined,'detail-symbol');symbol.append(el('i',undefined,'ph-thin ph-'+p.icon));copy.append(symbol,el('small',placeLabel(p)+(p.example?' · exemple':'')),el('h2',p.name),el('p',p.address),el('p',p.description));if(p.link){const a=el('a','Ouvrir sur le forum ↗');a.href=p.link;a.target='_blank';a.rel='noopener';copy.append(a)}if(editing){const edit=el('button','Modifier');edit.onclick=()=>editPlace(p);const remove=el('button','Supprimer');remove.onclick=()=>{if(!confirm('Supprimer « '+p.name+' » du brouillon ?'))return;places=places.filter(x=>x.id!==p.id);persist();render();$('detail').hidden=true};copy.append(edit,remove)}renderResidents(p,copy);box.append(copy);$('detail').hidden=false;map?.easeTo({center:[p.lng,p.lat],zoom:16,padding:{left:innerWidth>850?350:0,right:editing&&innerWidth>850?350:0},duration:motion?700:0});if(innerWidth<850)$('directory').hidden=true;if(editing)$('editor').hidden=true}
 function point(lng,lat){if(!editing)return;$('lng').value=lng.toFixed(6);$('lat').value=lat.toFixed(6);if(!map)return;if(!draftMarker){draftMarker=new maplibregl.Marker({color:'#c4a66b',draggable:true}).setLngLat([lng,lat]).addTo(map);draftMarker.on('dragend',()=>{const c=draftMarker.getLngLat();point(c.lng,c.lat)})}else draftMarker.setLngLat([lng,lat])}
-function editPlace(p){if(!editing)return;$('detail').hidden=true;$('editor').hidden=false;for(const key of ['name','zone','type','icon','description','image','link','address','lng','lat'])$(key).value=p[key]||'';$('place-id').value=p.id;$('place-form').dataset.category=p.category;syncIconPicker();point(p.lng,p.lat)}
-function resetForm(){if(!editing)return;$('place-form').reset();delete $('place-form').dataset.category;$('place-id').value='';$('address').value='';$('results').replaceChildren();draftMarker?.remove();draftMarker=null;$('detail').hidden=true;$('editor').hidden=false;syncIconPicker()}
+function editPlace(p){if(!editing)return;$('detail').hidden=true;$('editor').hidden=false;for(const key of ['name','zone','type','icon','description','image','link','address','lng','lat'])$(key).value=p[key]||'';$('place-id').value=p.id;$('place-form').dataset.category=p.category;$('residential').checked=p.residential;$('resident-fields').replaceChildren();p.residents.forEach(addResidentFields);syncResidenceEditor();syncIconPicker();point(p.lng,p.lat)}
+function resetForm(){if(!editing)return;$('place-form').reset();delete $('place-form').dataset.category;$('place-id').value='';$('address').value='';$('results').replaceChildren();draftMarker?.remove();draftMarker=null;$('detail').hidden=true;$('editor').hidden=false;$('resident-fields').replaceChildren();syncResidenceEditor();syncIconPicker()}
 async function geocode(event){event.preventDefault();if(!editing||searchBusy)return;const query=$('address').value.trim();if(!query)return;searchBusy=true;$('find-address').disabled=true;try{let cache={};try{cache=JSON.parse(localStorage.getItem(CACHE)||'{}')}catch{};let results=cache[query.toLowerCase()];if(!results){if(Date.now()-lastRequest<1200)throw Error('Patientez un instant avant une nouvelle recherche.');lastRequest=Date.now();const url=new URL('https://nominatim.openstreetmap.org/search');url.search=new URLSearchParams({q:query,format:'jsonv2',limit:'5',countrycodes:'gb',viewbox:'-0.55,51.75,0.35,51.25',bounded:'1','accept-language':'fr'});message('Recherche de l’adresse…');const response=await fetch(url,{signal:AbortSignal.timeout(12000)});if(!response.ok)throw Error('La recherche est temporairement indisponible. Placez le repère directement sur la carte.');results=await response.json();cache[query.toLowerCase()]=results;try{localStorage.setItem(CACHE,JSON.stringify(cache))}catch{}}$('results').replaceChildren();results.forEach(result=>{const b=el('button',result.display_name);b.type='button';b.onclick=()=>{point(Number(result.lon),Number(result.lat));map?.easeTo({center:[Number(result.lon),Number(result.lat)],zoom:16,duration:motion?700:0});message('Position trouvée. Vous pouvez déplacer le repère doré.')};$('results').append(b)});message(results.length?'Choisissez une adresse dans les résultats.':'Aucune adresse trouvée : essayez le nom de la rue ou cliquez sur la carte.')}catch(error){message(error.message)}finally{searchBusy=false;$('find-address').disabled=false}}
 async function start(){canEdit=editingEnabled&&await checkAdmin();editing=canEdit&&new URLSearchParams(location.search).get('edition')==='1';document.body.classList.toggle('editing',editing);$('editor').hidden=!editing;$('editor-link').hidden=!canEdit||editing;$('toggle-editor').hidden=!canEdit;
-try{if(!dataURL||dataSource.includes('URL_PAGE_LIEUX'))throw Error('Renseignez l’URL de la page des lieux dans rose-map-data.');const response=await fetch(dataURL,{cache:'no-store'});if(!response.ok)throw Error('Impossible de charger les lieux.');places=validate(readPlaces(await response.text()));publishedPlaces=places.map(p=>({...p}));if(editing){try{const draft=localStorage.getItem(KEY);if(draft){const data=JSON.parse(draft);if(data.version>=2)places=validate(data);else{
+try{if(!dataURL||dataSource.includes('URL_PAGE_LIEUX'))throw Error('Renseignez l’URL de la page des lieux dans rose-map-data.');const response=await fetch(dataURL,{cache:'no-store'});if(!response.ok)throw Error('Impossible de charger les lieux.');places=validate(readPlaces(await response.text()));publishedPlaces=clonePlaces(places);if(editing){try{const draft=localStorage.getItem(KEY);if(draft){const data=JSON.parse(draft);if(data.version>=2)places=validate(data);else{
 const merged=new Map(publishedPlaces.map(p=>[p.id,p]));validate(data).filter(p=>!(p.example&&/^ex[1-6]$/.test(p.id))).forEach(p=>{const current=merged.get(p.id);merged.set(p.id,current?{...p,zone:current.zone,type:current.type,icon:current.icon}:p)});places=[...merged.values()];
 }}}catch{message('Le brouillon local est illisible. Les lieux publiés sont affichés.')}}}catch(error){dataLoadError=error.message;message(dataLoadError)}
 for(const [key,label] of Object.entries({all:'Tout',...Object.fromEntries(Object.entries(zones).map(([key,zone])=>[key,zone.label]))})){const b=el('button',label);b.type='button';if(zones[key])b.style.setProperty('--place-color',zones[key].color);b.classList.toggle('zone-filter',key!=='all');b.setAttribute('aria-pressed',String(key==='all'));b.onclick=()=>{active=key;Array.from($('filters').children).forEach(n=>n.setAttribute('aria-pressed',String(n===b)));render()};$('filters').append(b)}render();
@@ -125,7 +187,7 @@ map=new maplibregl.Map({container:'map',style,center:[-.145,51.509],zoom:14.8,pi
 $('toggle-editor').onclick=()=>{if(!canEdit)return;if(!editing){const url=new URL(location.href);url.searchParams.set('edition','1');location.href=url.href;return} $('editor').hidden=!$('editor').hidden};
 $('search').oninput=render;$('toggle-directory').onclick=()=>{$('directory').hidden=!$('directory').hidden};$('close-detail').onclick=()=>{$('detail').hidden=true;if(editing)$('editor').hidden=false};$('perspective').onclick=()=>{if(!map)return;const three=map.getPitch()<10;map.easeTo({pitch:three?52:0,bearing:three?-22:0,duration:motion?500:0});$('perspective').setAttribute('aria-pressed',String(three))};$('recenter').onclick=()=>fitPlaces(motion?650:0);
 $('address-search').onsubmit=geocode;$('new-place').onclick=resetForm;
-$('place-form').onsubmit=event=>{event.preventDefault();if(!editing)return;const data={id:$('place-id').value||crypto.randomUUID(),name:$('name').value.trim(),category:$('place-form').dataset.category||($('icon').value==='house'?'residence':'lieu'),zone:$('zone').value,type:$('type').value.trim(),icon:$('icon').value,address:$('address').value,description:$('description').value,image:$('image').value,link:$('link').value,positionPrecision:places.find(p=>p.id===$('place-id').value)?.positionPrecision||'building',lng:Number($('lng').value),lat:Number($('lat').value)};try{const p=validate({places:[data]})[0];const index=places.findIndex(x=>x.id===p.id);if(index<0)places.push(p);else places[index]=p;persist();render();resetForm()}catch(error){message(error.message)}};
+$('place-form').onsubmit=event=>{event.preventDefault();if(!editing)return;const data={id:$('place-id').value||crypto.randomUUID(),name:$('name').value.trim(),category:$('place-form').dataset.category||($('residential').checked||$('icon').value==='house'?'residence':'lieu'),zone:$('zone').value,type:$('type').value.trim(),icon:$('icon').value,address:$('address').value,description:$('description').value,image:$('image').value,link:$('link').value,residential:$('residential').checked,residents:readResidentFields(),positionPrecision:places.find(p=>p.id===$('place-id').value)?.positionPrecision||'building',lng:Number($('lng').value),lat:Number($('lat').value)};try{const p=validate({places:[data]})[0];const index=places.findIndex(x=>x.id===p.id);if(index<0)places.push(p);else places[index]=p;persist();render();resetForm()}catch(error){message(error.message)}};
 $('export').onclick=()=>{if(!editing)return;const blob=new Blob([exportPage()],{type:'text/html;charset=utf-8'});const url=URL.createObjectURL(blob),a=el('a');a.href=url;a.download='lieux.html';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);message('Fichier exporté : collez son contenu dans la page HTML des lieux pour publier.')};
 $('import').onchange=async event=>{if(!editing)return;const file=event.target.files[0];if(!file)return;try{if(file.size>2e6)throw Error('Fichier trop volumineux.');const next=validate(readPlaces(await file.text()));if(!confirm('Remplacer le brouillon par les '+next.length+' lieux du fichier ?'))return;places=next;persist();render();resetForm()}catch(error){message(error.message)}finally{event.target.value=''}};
 document.getElementById("close-editor").onclick=()=>{document.getElementById("editor").hidden=true};
@@ -133,5 +195,6 @@ for(const [key,zone] of Object.entries(zones)){const option=el('option',zone.lab
 for(const [key,label] of Object.entries(iconOptions)){const option=el('option',label);option.value=key;option.defaultSelected=key==='map-pin';$('icon').append(option)}
 $('icon').value='map-pin';
 createIconPicker();
-$('load-published').onclick=()=>{if(!editing||!publishedPlaces.length)return;if(!confirm('Remplacer ce brouillon par les '+publishedPlaces.length+' adresses publiées ?'))return;places=publishedPlaces.map(p=>({...p}));persist();render();resetForm();fitPlaces(motion?650:0)};
+createResidenceTools();
+$('load-published').onclick=()=>{if(!editing||!publishedPlaces.length)return;if(!confirm('Remplacer ce brouillon par les '+publishedPlaces.length+' adresses publiées ?'))return;places=clonePlaces(publishedPlaces);persist();render();resetForm();fitPlaces(motion?650:0)};
 start();
