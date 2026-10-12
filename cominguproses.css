@@ -2620,7 +2620,7 @@ body::before { background:linear-gradient(135deg,#2b2b2b 0%,#242424 50%,#171717 
 .rose-timeline strong { display:block;
   font:500 13px/1.5 var(--sans);
   text-transform:uppercase;
-  color:#f4f4f4; }
+  color:var(--ink); }
 .rose-pa-reworked .rose-pa-weather { align-self:start;
   flex-direction:row;
   flex-wrap:wrap;
@@ -3717,7 +3717,7 @@ html[data-theme=light] .roses-live .sceditor-toolbar{--editor-icon:#242424;--edi
 .rose-discover .feed-item .text a{font-weight:600;color:var(--ivory);text-decoration:none;transition:color .25s}
 .rose-discover .feed-item .text a:hover,.rose-discover .feed-item .text a:focus-visible{color:var(--accent2)}
 .rose-discover .feed-item .text :is(p,blockquote){margin:7px 0 0;font:12px/1.7 var(--sans);color:var(--muted)}
-.rose-discover .feed-item .text img{max-width:100%;height:auto}
+.rose-discover .feed-item .text img{max-width:100%;height:auto;display:none}
 .rose-discover .activity-end{display:flex;align-items:center;justify-content:center;gap:18px;margin:28px 0 0;padding:0;background:none;font:10px/1.5 var(--couture-sans);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:center}
 .rose-discover .activity-end::before,.rose-discover .activity-end::after{content:"";display:block;flex:1;height:1px;max-width:100px;background:var(--frame-soft)}
 @media(max-width:600px){.rose-discover .activity-feed{padding:0 14px}.roses-live .rose-discover .feed-item{grid-template-columns:36px minmax(0,1fr);gap:6px 14px;padding:16px 0}.rose-activity-avatar{grid-column:1;grid-row:1/3;align-self:start;width:36px;height:48px}.rose-discover .feed-item .time{grid-column:2;grid-row:1;text-align:left;font-size:10px}.rose-discover .feed-item .text{grid-column:2;grid-row:2;font-size:12px}.roses-live .rose-activity-date .table-title{font-size:21px}.rose-discover .activity-end{gap:12px}}
@@ -3855,6 +3855,18 @@ html[data-theme=light] .roses-live #userwayAccessibilityIcon{box-shadow:0 5px 18
 @keyframes cur-sheet-heartbeat{0%,40%,100%{transform:translate(-50%,-50%) scale(1);opacity:.45}12%{transform:translate(-50%,-50%) scale(1.07);opacity:.8}20%{transform:translate(-50%,-50%) scale(1.02);opacity:.55}28%{transform:translate(-50%,-50%) scale(1.12);opacity:.9}}
 @container(max-width:400px){.cur-sheet-reading{padding:28px 16px 20px}.cur-sheet-moodboard{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(3,155px)}}
 @media(prefers-reduced-motion:reduce){.cur-sheet .cur-sheet-tabs button{transition:none}.cur-sheet-portrait::before{animation:none;transform:translate(-50%,-50%) scale(1.06)}}
+
+/* Fiche admin — icône, titre et texte. */
+.cur-admin{width:650px;max-width:100%;margin:32px auto;padding:0;color:var(--ink);font:13px/1.85 var(--sans);text-align:left;text-transform:none;overflow-wrap:anywhere}
+.cur-admin,.cur-admin *{box-sizing:border-box}
+.cur-admin>br{display:none}
+.cur-admin-icon{position:relative;isolation:isolate;width:50px;height:50px;margin:0 auto 30px;border-radius:50%;outline:1px solid var(--accent2);outline-offset:5px;background:linear-gradient(125deg,var(--accent1),var(--accent2))}
+.cur-admin-icon::before{content:"";position:absolute;top:50%;left:50%;width:100%;height:100%;z-index:-1;border:1px solid var(--accent2);border-radius:50%;background:color-mix(in srgb,var(--accent2) 50%,transparent);transform:translate(-50%,-50%);animation:cur-sheet-heartbeat 2.8s ease-in-out infinite;pointer-events:none}
+.cur-admin .cur-admin-icon>img{display:block;width:100%;max-width:none;height:100%;margin:0;padding:0;border:0;border-radius:50%;object-fit:cover;object-position:center;filter:grayscale(1);mix-blend-mode:darken}
+.cur-admin .cur-admin-title{margin:0 0 14px;padding:0;border:0;font:400 24px var(--couture-sans);letter-spacing:0;text-align:center;text-transform:uppercase;color:var(--accent2)}
+.cur-admin-text{padding:28px;background:var(--neutralDark);color:var(--ink);font:inherit;text-align:left;text-transform:none;hyphens:auto;width:75%;margin:auto;font-size:15px}
+.cur-admin-text>div+div{margin-top:18px}
+@media(prefers-reduced-motion:reduce){.cur-admin-icon::before{animation:none;transform:translate(-50%,-50%) scale(1.06)}}
 
 .cur-maker{width:960px;max-width:100%;margin:40px auto 70px;color:var(--ivory);font:13px/1.7 var(--sans);text-align:left;text-transform:none}
 .cur-maker [hidden]{display:none!important}
