@@ -3307,7 +3307,7 @@ body { background:#0b0b0b;
 .profile-activity-badge{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;min-height:24px;padding:5px 10px;border:1px solid rgb(255 255 255/.15);border-radius:3px;color:#fff;font:600 11px/1.2 var(--sans);text-transform:lowercase;white-space:nowrap;background:#405e45}
 .profile-activity-badge[data-state=reduced]{background:#8e5b2c}
 .profile-activity-badge[data-state=absent]{background:#894641}
-.profile-tabs{display:flex;align-items:stretch;gap:26px;flex-shrink:0;border-bottom:1px solid var(--body-line);margin-bottom:20px}
+.profile-tabs{display:flex;flex-wrap:wrap;align-items:stretch;gap:12px 26px;flex-shrink:0;border-bottom:1px solid var(--body-line);margin-bottom:20px}
 .profile-tabs button{position:relative;display:block;appearance:none;background:none;border:0;border-radius:0;box-shadow:none;margin:0;padding:0 0 12px;cursor:pointer;font:19px/1 var(--serif);text-transform:lowercase;color:var(--profile-ink);opacity:.45;transition:opacity .25s,color .25s}
 .profile-tabs button[aria-selected=true]{opacity:1;color:var(--group-color)}
 .profile-tabs button[aria-selected=true]::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:2px;background:var(--group-color)}
@@ -3317,6 +3317,10 @@ body { background:#0b0b0b;
 .profile-pane{height:100%;overflow-y:auto;overflow-x:hidden;padding:2px 12px 10px 1px;scrollbar-width:thin;scrollbar-color:var(--group-color) transparent;overscroll-behavior:contain}
 .profile-pane[hidden]{display:none!important}
 .profile-pane::-webkit-scrollbar{width:3px}.profile-pane::-webkit-scrollbar-thumb{background:var(--group-color)}
+.profile-awards-list{display:flex;flex-wrap:wrap;align-items:flex-start;align-content:flex-start;gap:14px;margin:0;padding:4px 0}
+.profile-awards-list .award{display:block;flex:0 0 64px;width:64px;height:64px;min-width:64px;min-height:64px;margin:0;border:0;border-radius:0;background-size:contain;background-repeat:no-repeat;background-position:center;opacity:.8;filter:grayscale(.5);box-shadow:none}
+.profile-awards-list .award>img{display:block;width:64px;height:64px;max-width:none;max-height:none;object-fit:contain;filter:none}
+.profile-awards-empty{width:100%;margin:0;padding:12px 0;color:var(--muted);font:12px/1.6 var(--sans)}
 .profile-pane section+section{margin-top:22px;padding-top:20px;border-top:1px solid var(--body-line)}
 .profile-sheet dl,.profile-fields-section{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 28px;margin:0;min-width:0}
 .profile-sheet dl>div{display:flex;flex-direction:column;min-width:0}
