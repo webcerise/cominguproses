@@ -3364,7 +3364,7 @@ html[data-theme=light] .profile-sheet{--profile-paper:#fff;--profile-ink:#242424
 .topic-avatar-gif span{display:block;width:100%;height:100%;overflow:hidden;isolation:isolate;background:linear-gradient(125deg,var(--group-color),#333)}
 .topic-avatar-gif img{display:block;width:100%;height:100%;object-fit:cover;filter:grayscale(1);mix-blend-mode:darken}
 .topic-avatar-player{align-self:center;min-width:0;font:11px/1.5 var(--sans);text-transform:lowercase;color:#ddd;opacity:0;transform:translateX(10px);transition:opacity .45s ease,transform .65s ease}
-.topic-avatar-player strong{display:block;margin-top:5px;font:24px/1.1 var(--serif);font-weight:400;text-transform:lowercase;color:var(--group-color);overflow-wrap:anywhere}
+.topic-avatar-player strong{display:block;margin-top:5px;font:15px/1.1 var(--serif);font-weight:400;text-transform:lowercase;color:var(--group-color);overflow-wrap:anywhere}
 .topic-avatar-details{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;align-content:start;gap:12px 10px;width:100%;min-height:0}
 .topic-avatar-details>div{min-width:0;opacity:0;transform:translateY(10px);transition:opacity .4s ease,transform .55s ease}
 .topic-avatar-details>div:nth-child(1),.topic-avatar-details>div:nth-child(2){display:flex;flex-direction:column-reverse;gap:3px;text-align:center}
