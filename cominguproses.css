@@ -3398,12 +3398,16 @@ html[data-theme=light] body::before{background:none}
 html[data-theme=light] .page-header-backdrop{opacity:.12;filter:grayscale(1) blur(12px)}
 html[data-theme=light] .site-content::before{background:none}
 html[data-theme=light] .rose-body{color:#242424;--body-line:var(--frame-soft)}
+html[data-theme=light] .rose-body .rose-category{background:#fff}
+html[data-theme=light] .rose-body .rose-category :is(.rose-forums,.rose-last){background:#fff}
 html[data-theme=light] :is(.society-header,.header-window-scene,.rose-category-head){--accent2:#806025;--accent2-rgb:128 96 37;--ivory:#242424;color:#242424}
 html[data-theme=light] #roses-header{background:#eee}
 html[data-theme=light] .header-window-scene .header-background{filter:grayscale(1) brightness(1.15);opacity:.5}
 html[data-theme=light] .header-window-scene .header-pinterest{background:#eee}
 html[data-theme=light] .society-header.header-window-scene{background:#eee}
 html[data-theme=light] .rose-category-head::after{background:rgb(255 255 255/.2)}
+html[data-theme=light] .rose-body .rose-category-head,html[data-theme=light] .rose-body .rose-category-head :is(.header-window-scene,.header-pinterest){background:#fff}
+html[data-theme=light] .rose-body .rose-category-head::after{background:rgb(255 255 255/.4)}
 html[data-theme=light] .rose-category-head>div:not(.header-window-scene){text-shadow:0 1px 1px rgb(255 255 255/.7)}
 html[data-theme=light] .header-window-scene .pinterest-photo{background:linear-gradient(125deg,#702638,#c4a66b)}
 html[data-theme=light] .header-window-scene .pinterest-photo img{filter:grayscale(1) brightness(.75);mix-blend-mode:darken;opacity:1}
@@ -3421,7 +3425,7 @@ html[data-theme=light] .notification-count{background:var(--accent1);color:#fff}
 html[data-theme=light] footer{background:rgb(255 255 255/.65);color:#555}
 html[data-theme=light] .rose-pa.rose-pa-reworked{background:rgb(255 255 255/.72)}
 html[data-theme=light] :is(.rose-register-grid,.member-entry,.group-section,.profile-sheet,.topic-post,.topic-reply){background:rgb(255 255 255/.88);color:#242424}
-html[data-theme=light] .rose-body .rose-forum{background:rgb(255 255 255/.5)}
+html[data-theme=light] .rose-body .rose-forum{background:#fff}
 html[data-theme=light] .rose-body :is(p,.last-post-title,.last-time,.forum-stats,.subforums button),html[data-theme=light] :is(.rose-pa-weather>span,.rose-timeline .rose-timeline-date,.rose-shortcuts span,.rose-news h3,.forum-title a){color:#333}
 html[data-theme=light] .rose-pa-reworked .rose-context>a{color:var(--accent1)}
 html[data-theme=light] :is(.rose-new-member span,.rose-presence>p,.rose-recent small,.member-visit,.members-empty,#member-count,.profile-status,.profile-name p,.profile-sheet dt,.topic-pagination,.participant-identity small){color:#606060}
