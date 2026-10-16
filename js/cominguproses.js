@@ -4,8 +4,8 @@
  if(window.ComingUpRoses?.register)return;
  const script=document.currentScript;
  const base=new URL('.',script?.src||'https://cdn.jsdelivr.net/gh/webcerise/cominguproses@main/cominguproses.js');
- const modules={index:'.rose-pa,.group-legend',forums:'.rose-forum,.subforums,.rose-topic-row',members:'.members-directory,.member-entry',profile:'.live-profile',posts:'.topic-post',sheets:'.cur-sheet',awards:'.award',discover:'.rose-discover'};
- const api=window.ComingUpRoses={registered:new Set(),started:new Set(),requests:new Map(),version:'20261014-1'};
+ const modules={index:'.rose-pa,.group-legend',forums:'.rose-forum,.subforums,.rose-topic-row',members:'.members-directory,.member-entry',profile:'.live-profile',posts:'.topic-post',sheets:'.cur-sheet',awards:'.award',discover:'.rose-discover',sms:'form[name="post"] input[name="f"][value="29"]'};
+ const api=window.ComingUpRoses={registered:new Set(),started:new Set(),requests:new Map(),version:'20261016-1'};
  const ready=fn=>document.readyState==='loading'?document.addEventListener('DOMContentLoaded',fn,{once:true}):fn();
  api.register=(name,selector,init)=>{
   if(api.registered.has(name))return;
@@ -85,7 +85,13 @@
  }
  function detect(){
   for(const [name,selector] of Object.entries(modules)){
-   if(!api.registered.has(name)&&!api.requests.has(name)&&document.querySelector(selector))api.load(name).catch(error=>console.error('[Coming Up Roses]',error.message));
+   if(api.registered.has(name)||api.requests.has(name))continue;
+   let present=document.querySelector(selector);
+   if(name==='sms'&&!present){
+    const params=new URLSearchParams(location.search);
+    present=(location.pathname==='/post'&&params.get('f')==='29'&&['newtopic','reply','quote'].includes(params.get('mode')))||(document.querySelector('.topic-post')&&document.querySelector('.navigation_links a[href*="/f29-"]'));
+   }
+   if(present)api.load(name).catch(error=>console.error('[Coming Up Roses]',error.message));
   }
  }
  ready(()=>{
