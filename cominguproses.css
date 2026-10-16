@@ -3895,6 +3895,46 @@ html[data-theme=light] .roses-live #userwayAccessibilityIcon{box-shadow:0 5px 18
 .cur-prez-alt-answer{font:inherit;text-transform:none}
 @media(max-width:500px){.cur-prez-alt .cur-prez-alt-name{font-size:54px}.cur-prez-alt-intro{padding:22px}.cur-prez-alt-interlude{grid-template-columns:minmax(0,1fr) 56px minmax(0,1fr);gap:12px}.cur-prez-alt-icon{width:50px;height:50px}.cur-prez-alt .cur-prez-alt-interlude figure{height:100px}.cur-prez-alt-bottom{gap:18px}}
 
+/* Fiche de pré-liens — composition commune aux fiches, structure des trois onglets du croquis. */
+.cur-prelinks{--fiche-couleur:var(--accent2);--prelinks-paper:var(--neutralDark);--prelinks-soft:var(--neutral);--prelinks-line:var(--frame-soft);position:relative;isolation:isolate;width:650px;max-width:100%;margin:28px auto;padding:0;border:1px solid var(--prelinks-line);background:var(--prelinks-paper);color:var(--ink);font:14px/1.85 var(--sans);text-align:left;text-transform:none;overflow-wrap:anywhere;box-sizing:border-box}
+.cur-prelinks,.cur-prelinks *{box-sizing:border-box}
+.cur-prelinks>br,.cur-prelinks-heading>br,.cur-prelinks-heading h2>br,.cur-prelinks-tabs>br,.cur-prelinks-list>br,.cur-prelink>br,.cur-prelink>header>br,.cur-prelink-meta>br{display:none}
+.cur-prelinks>.cur-prelinks-switch{position:absolute;width:1px;height:1px;margin:0;padding:0;border:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.cur-prelinks-backdrop{position:absolute;inset:0;z-index:-1;isolation:isolate;overflow:hidden;background:var(--fiche-couleur);pointer-events:none}
+.cur-prelinks .cur-prelinks-backdrop>img{display:block;width:100%;height:100%;max-width:none;max-height:none;margin:0;padding:0;border:0;object-fit:cover;object-position:center;opacity:.8;filter:grayscale(1);mix-blend-mode:darken}
+.cur-prelinks-heading{position:relative;isolation:isolate;display:grid;place-items:center;min-height:212px;margin:0;padding:28px 66px 26px 82px;text-align:center}
+.cur-prelinks .cur-prelinks-heading h2{display:flex;flex-direction:column;align-items:center;gap:0;min-width:0;max-width:100%;margin:0;padding:0;border:0;font:inherit;letter-spacing:0;text-transform:none}
+.cur-prelinks .cur-prelinks-heading t2{display:block;max-width:100%;margin:0;padding:0;color:#fff;mix-blend-mode:normal;font:400 96px/.95 var(--script);letter-spacing:0;text-transform:none;text-wrap:balance}
+.cur-prelinks-tabs{position:absolute;top:32px;left:19px;z-index:2;display:flex;flex-direction:column;align-items:center;gap:13px;margin:0;padding:0;border:0}
+.cur-prelinks-tabs::before{content:'';position:absolute;top:18px;bottom:18px;left:50%;z-index:-1;width:1px;background:var(--prelinks-line)}
+.cur-prelinks-tabs>label{position:relative;display:grid;place-items:center;width:36px;height:36px;margin:0;padding:0;border:1px solid var(--prelinks-line);border-radius:50%;background:var(--prelinks-paper);color:var(--fiche-couleur);cursor:pointer;box-shadow:0 0 0 4px color-mix(in srgb,var(--prelinks-paper) 80%,transparent);transition:color .2s,border-color .2s,background .2s}
+.cur-prelinks-tabs>label>i{font-size:22px;line-height:1}
+.cur-prelinks-tabs>label>span{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.cur-prelinks-tabs>label:hover{border-color:var(--fiche-couleur);color:var(--ink)}
+.cur-prelinks:has(>.cur-prelinks-switch[value=contexte]:checked) .cur-prelinks-tabs>label:nth-of-type(1),.cur-prelinks:has(>.cur-prelinks-switch[value=roles]:checked) .cur-prelinks-tabs>label:nth-of-type(2),.cur-prelinks:has(>.cur-prelinks-switch[value=attentes]:checked) .cur-prelinks-tabs>label:nth-of-type(3){border-color:var(--fiche-couleur);background:var(--neutralDarker);color:var(--ink)}
+.cur-prelinks:has(>.cur-prelinks-switch[value=contexte]:focus-visible) .cur-prelinks-tabs>label:nth-of-type(1),.cur-prelinks:has(>.cur-prelinks-switch[value=roles]:focus-visible) .cur-prelinks-tabs>label:nth-of-type(2),.cur-prelinks:has(>.cur-prelinks-switch[value=attentes]:focus-visible) .cur-prelinks-tabs>label:nth-of-type(3){outline:1px solid var(--fiche-couleur);outline-offset:4px}
+.cur-prelinks-panel{height:480px;min-width:0;min-height:0;margin:0;padding:28px 30px 32px;border:0;background:var(--prelinks-soft);overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:var(--fiche-couleur) transparent;scrollbar-gutter:stable}
+.cur-prelinks:has(>.cur-prelinks-switch:checked)>.cur-prelinks-panel{display:none}
+.cur-prelinks:has(>.cur-prelinks-switch[value=contexte]:checked)>.cur-prelinks-context,.cur-prelinks:has(>.cur-prelinks-switch[value=roles]:checked)>.cur-prelinks-roles,.cur-prelinks:has(>.cur-prelinks-switch[value=attentes]:checked)>.cur-prelinks-expectations{display:block}
+.cur-prelinks-panel:focus-visible{outline:1px solid var(--fiche-couleur);outline-offset:-5px}
+.cur-prelinks-panel>b1{display:block;margin:0 0 24px;padding:0 0 12px;border-bottom:1px solid var(--prelinks-line);color:var(--fiche-couleur);font:11px/1.5 var(--couture-sans);letter-spacing:.12em;text-transform:uppercase}
+.cur-prelinks-text{min-width:0;color:var(--ink);font:inherit;text-transform:none;overflow-wrap:anywhere}
+.cur-prelinks-list{display:block}
+.cur-prelink{display:grid;grid-template-columns:268px minmax(0,1fr);gap:24px;align-items:center;min-width:0;margin:0;padding:0;border:0}
+.cur-prelink+.cur-prelink{margin-top:36px;padding-top:36px;border-top:1px solid var(--prelinks-line)}
+.cur-prelinks .cur-prelink>figure{grid-column:1;grid-row:1;width:268px;height:150px;margin:4px 0;padding:0;border:0;outline:1px solid var(--prelinks-line);outline-offset:4px;background:var(--prelinks-paper);overflow:hidden}
+.cur-prelinks .cur-prelink>figure>img{display:block;width:100%;height:100%;max-width:none;max-height:none;margin:0;padding:0;border:0;border-radius:0;object-fit:cover;object-position:center 25%;opacity:.8;filter:none;mix-blend-mode:normal}
+.cur-prelink>header{grid-column:2;grid-row:1;display:flex;flex-direction:column;align-items:flex-start;gap:14px;min-width:0;margin:0;padding:0;border:0}
+.cur-prelinks .cur-prelink>header>b6{display:block;margin:0;padding:0;border:0;color:var(--fiche-couleur);font:400 32px/1.15 var(--serif);text-transform:none;letter-spacing:-.025em}
+.cur-prelink>.cur-prelinks-text{grid-column:1/-1;grid-row:2;margin:0;font-size:14px}
+.cur-prelink-meta{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;color:var(--muted);font:11px/1.5 var(--couture-sans);text-transform:none}
+.cur-prelinks .cur-prelink-meta>b7{margin:0;padding:2px 7px;background:var(--neutralDarker);color:var(--fiche-couleur);font:11px/1.5 var(--couture-sans);text-transform:lowercase}
+.cur-prelinks .cur-prelinks-expectations b6{display:block;margin:24px 0 12px;padding:0;border:0;color:var(--fiche-couleur);font:400 21px/1.2 var(--serif);text-transform:lowercase;letter-spacing:0}
+.cur-prelinks .cur-prelinks-expectations b6:first-child{margin-top:0}
+@media(max-width:500px){.cur-prelinks{margin-block:24px}.cur-prelinks-heading{min-height:184px;padding:24px 30px 24px 68px}.cur-prelinks .cur-prelinks-heading t2{font-size:72px}.cur-prelinks-tabs{top:28px;left:14px;gap:12px}.cur-prelinks-tabs>label{width:32px;height:32px}.cur-prelinks-tabs>label>i{font-size:20px}.cur-prelinks-panel{height:470px;padding:24px 22px 28px}.cur-prelink{grid-template-columns:minmax(0,1fr);gap:20px}.cur-prelink>header{grid-column:1}.cur-prelinks .cur-prelink>figure{grid-column:1;grid-row:2;justify-self:center;width:268px;max-width:100%;height:auto;aspect-ratio:268/150;margin:4px 0}.cur-prelink>.cur-prelinks-text{grid-row:3}.cur-prelinks .cur-prelink>header>b6{font-size:28px}}
+@media(max-width:350px){.cur-prelinks-heading{padding-right:20px}.cur-prelinks .cur-prelinks-heading t2{font-size:62px}.cur-prelinks-panel{padding:22px 17px 26px}.cur-prelinks .cur-prelink>header>b6{font-size:23px}}
+@media(prefers-reduced-motion:reduce){.cur-prelinks-tabs>label{transition:none}}
+
 /* Fiche de liens — portrait, présentation et carnet de relations. */
 .cur-links{--fiche-couleur:var(--accent2);--liens-paper:var(--neutralDark);--liens-line:color-mix(in srgb,var(--fiche-couleur) 38%,transparent);--liens-soft:color-mix(in srgb,var(--ivory) 12%,transparent);width:650px;max-width:100%;margin:32px auto;padding:0;border:0;background:none;color:var(--ivory);font:13px/1.8 var(--sans);text-align:left;text-transform:none;overflow-wrap:anywhere;box-sizing:border-box}
 .cur-links,.cur-links *{box-sizing:border-box}
