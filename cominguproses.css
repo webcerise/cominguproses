@@ -101,11 +101,6 @@ h1, h2, h3 {
   font-weight:500;
 }
 
-i {
-  font-size:22px;
-  vertical-align:middle;
-}
-
 small {
   font-size:12px;
 }
@@ -3767,7 +3762,7 @@ html[data-theme=light] .roses-live #userwayAccessibilityIcon{box-shadow:0 5px 18
 .rose-topic-row .topictitle{display:inline;max-width:none;overflow:visible;white-space:normal;text-overflow:clip;font:900 19px/1.25 var(--sans);text-transform:uppercase;color:var(--ivory);overflow-wrap:anywhere;transition:color .25s}
 .rose-topic-row .topictitle:hover,.rose-topic-row .topictitle:focus-visible{color:var(--accent2)}
 .topic-participation{display:none;font-size:12px;color:var(--accent2)}
-.topic-participation:has(img){display:inline-flex}
+.topic-participation:has(img){display:inline-flex;font-size:22px}
 .topic-participation img{display:none}
 .rose-topic-byline{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin-top:8px}
 .rose-topic-row .topic-author{font:11px/1.4 var(--sans);color:var(--muted)}
@@ -3894,6 +3889,51 @@ html[data-theme=light] .roses-live #userwayAccessibilityIcon{box-shadow:0 5px 18
 .cur-prez-alt .cur-prez-alt-questions h4{margin:0 0 8px;padding:0;border:0;color:var(--fiche-couleur);font:400 15px/1.4 var(--serif);text-transform:none;letter-spacing:0}
 .cur-prez-alt-answer{font:inherit;text-transform:none}
 @media(max-width:500px){.cur-prez-alt .cur-prez-alt-name{font-size:54px}.cur-prez-alt-intro{padding:22px}.cur-prez-alt-interlude{grid-template-columns:minmax(0,1fr) 56px minmax(0,1fr);gap:12px}.cur-prez-alt-icon{width:50px;height:50px}.cur-prez-alt .cur-prez-alt-interlude figure{height:100px}.cur-prez-alt-bottom{gap:18px}}
+
+/* SMS — rendu iMessage original ; commandes adaptées au forum. */
+.sms-conversation .topic-posts { box-sizing:border-box; width:min(100%,460px); aspect-ratio:2064/4276; margin:50px auto 80px; padding:clamp(58px,14.3vw,65px) clamp(16px,4.2vw,19px) clamp(37px,9.3vw,42px); overflow:hidden; border:0; background:url("https://cdn.jsdelivr.net/gh/webcerise/cominguproses@37501eced6d705dd4ef86ce040f93276663a28e7/images/phone.png") center/100% 100% no-repeat; color:#f5f5f7; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; counter-reset:none; }
+.sms-direction-picker { display:flex; align-items:center; justify-content:space-between; gap:16px; margin:0 0 18px; border:1px solid var(--frame-soft); background:var(--neutralDark); }
+.sms-direction-picker > span { display:flex; min-width:0; align-items:center; gap:8px; padding:12px 15px; font:500 12px/1.3 var(--couture-sans); text-transform:uppercase; }
+.sms-direction-picker > span i { color:var(--accent2); font-size:18px; }
+.sms-direction-picker > div { display:grid; flex:0 0 auto; grid-template-columns:repeat(2,1fr); align-self:stretch; }
+.sms-direction-picker button { min-height:42px; padding:8px 13px; border:0; border-left:1px solid var(--frame-soft); border-radius:0; background:var(--neutral); color:var(--textColor); font:500 12px var(--couture-sans); text-transform:uppercase; }
+.sms-direction-picker button.is-active { background:var(--accent1); color:#fff; }
+.sms-direction-picker button i { vertical-align:middle; }
+.sms-pagination { display:flex; width:100%; align-items:center; justify-content:center; margin:-50px auto 55px; }
+.sms-pagination .pagination { display:inline-flex; width:max-content; flex-flow:row nowrap; align-items:center; justify-content:center; gap:5px; }
+.sms-phone-screen { display:flex; width:100%; height:100%; min-height:0; flex-direction:column; overflow-x:hidden; overflow-y:auto; overscroll-behavior:contain; border-radius:clamp(32px,9vw,42px); background:#181619; color:#f5f5f7; scrollbar-width:none; color-scheme:dark; -webkit-overflow-scrolling:touch; }
+.sms-phone-screen::-webkit-scrollbar { display:none; }
+.sms-phone-head { position:sticky; z-index:5; top:0; flex:0 0 auto; border-bottom:1px solid rgba(84,84,88,.55); background:rgba(24,22,25,.94); color:#f5f5f7; backdrop-filter:blur(18px); }
+.sms-contact { position:relative; display:grid; min-height:48px; grid-template-columns:34px minmax(0,1fr) 34px; grid-template-rows:minmax(48px,auto); place-items:center; padding:5px 12px 7px; }
+.sms-contact > .ph-caret-left, .sms-contact > .ph-thin.ph-caret-left { display:grid; grid-column:1; grid-row:1/3; align-self:stretch; justify-self:start; place-items:center; color:#087cff; font-size:28px; line-height:1; }
+.sms-contact > .ph-video-camera, .sms-contact > .ph-thin.ph-video-camera { display:grid; grid-column:3; grid-row:1/3; align-self:stretch; place-items:center; color:#087cff; font-size:24px; line-height:1; }
+.sms-contact strong { grid-column:2; grid-row:1; max-width:100%; padding:7px 5px; overflow:visible; font-size:24px; line-height:1; text-align:center; overflow-wrap:anywhere; white-space:normal; }
+.sms-conversation .sms-empty-post { display:none; }
+.sms-conversation .post.topic-post.sms-post { display:block; min-height:0; flex:0 0 auto; margin:0; padding:0; border:0; background:transparent; color:#f5f5f7; counter-increment:none; }
+.sms-conversation .sms-post:before,.sms-conversation .sms-post .post_details,.sms-conversation .sms-post .post-id,.sms-conversation .sms-post .post_profile,.sms-conversation .sms-post .post-meta,.sms-conversation .sms-post .post_signature { display:none!important; }
+.sms-conversation .sms-post .post-main,.sms-conversation .sms-post .post_message,.sms-conversation .sms-post .post_message > div:first-child { display:block; width:100%; max-width:none; margin:0; padding:0; border:0; background:transparent; color:inherit; font:inherit; }
+.sms-message-list { display:flex; width:100%; flex-direction:column; gap:5px; padding:7px 14px; }
+.sms-message-row { display:flex; width:100%; align-items:flex-end; gap:7px; }
+.sms-message-row.is-first { margin-top:10px; }
+.sms-message-row.gauche { justify-content:flex-start; }
+.sms-message-row.droite { justify-content:flex-end; }
+.sms-message-avatar { display:grid; width:35px; height:35px; flex:0 0 35px; place-items:center; overflow:hidden; border-radius:50%; background:#3a3a3c; color:#fff; font-size:15px; }
+.sms-message-avatar > img { display:block; width:100%; height:100%; object-fit:cover; border-radius:50%; }
+.sms-message-list sms { position:relative; display:block; width:fit-content; max-width:calc(76% - 35px); padding:8px 12px; border-radius:18px; font-size:15px; line-height:1.32; overflow-wrap:anywhere; white-space:pre-wrap; }
+.sms-message-list sms.gauche { border-bottom-left-radius:5px; background:#2c2c2e; color:#f5f5f7; }
+.sms-message-list sms.droite { border-bottom-right-radius:5px; background:#0a84ff; color:#fff; }
+.sms-message-row.gauche + .sms-message-row.gauche sms { border-top-left-radius:5px; }
+.sms-message-row.droite + .sms-message-row.droite sms { border-top-right-radius:5px; }
+.sms-message-list sms img { border-radius:20px; }
+.sms-edit { position:absolute; top:50%; display:grid; width:23px; height:23px; place-items:center; border-radius:50%; background:#2c2c2e; color:#98989d; font-size:11px; opacity:0; transform:translateY(-50%); transition:opacity .2s; }
+.sms-message-list sms.gauche .sms-edit { right:-30px; }
+.sms-message-list sms.droite .sms-edit { left:-30px; }
+.sms-message-list sms:hover .sms-edit { opacity:1; }
+.sms-conversation .sms-phone-composer { position:sticky; z-index:5; bottom:0; display:grid; width:100%; max-width:none; min-height:62px; flex:none; grid-template-columns:32px minmax(0,1fr) 28px; align-items:center; gap:8px; margin:auto 0 0; padding:8px 14px 14px; border-top:1px solid rgba(84,84,88,.55); background:#181619; color:#98989d; font:inherit; text-transform:none; }
+.sms-phone-composer > i { font-size:22px; }
+.sms-phone-composer > span { display:flex; min-height:34px; align-items:center; padding:0 13px; border:1px solid #48484a; border-radius:18px; background:#181619; color:#98989d; font-size:14px; }
+@media(max-width:520px) { .sms-direction-picker { align-items:stretch; flex-direction:column; gap:0; } .sms-direction-picker > div { border-top:1px solid var(--frame-soft); } .sms-direction-picker button:first-child { border-left:0; } }
+
 
 /* Fiche de pré-liens — composition commune aux fiches, structure des trois onglets du croquis. */
 .cur-prelinks{--fiche-couleur:var(--accent2);--prelinks-paper:var(--neutralDark);--prelinks-soft:var(--neutral);--prelinks-line:var(--frame-soft);position:relative;isolation:isolate;width:650px;max-width:100%;margin:28px auto;padding:0;border:1px solid var(--prelinks-line);background:var(--prelinks-paper);color:var(--ink);font:14px/1.85 var(--sans);text-align:left;text-transform:none;overflow-wrap:anywhere;box-sizing:border-box}
