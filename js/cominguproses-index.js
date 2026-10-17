@@ -4,6 +4,53 @@
  'use strict';
  const register=()=>window.ComingUpRoses.register('index',".rose-pa,.group-legend",api=>{
  const {slug,paint,pounds,loadGroups}=api;
+// La PA utilise le défilement natif : pas de rotation automatique ni de minuterie.
+document.querySelectorAll('.rose-pa-extra-featured').forEach(featured=>{
+ const carousel=featured.querySelector('.rose-pa-carousel');
+ const rail=featured.querySelector('.rose-pa-prelinks');
+ const dots=featured.querySelector('.rose-pa-carousel-dots');
+ const cards=Array.from(rail?.querySelectorAll('.rose-pa-prelink')||[]);
+ if(!carousel||!dots||!cards.length||carousel.dataset.carouselReady)return;
+ const previous=carousel.querySelector('.rose-pa-carousel-prev');
+ const next=carousel.querySelector('.rose-pa-carousel-next');
+ let positions=[],frame=0,current=-1;
+ const nearest=()=>positions.reduce((best,left,index)=>Math.abs(left-rail.scrollLeft)<Math.abs(positions[best]-rail.scrollLeft)?index:best,0);
+ const update=()=>{
+  frame=0;
+  const index=nearest();
+  if(current===index)return;
+  current=index;
+  Array.from(dots.children).forEach((dot,i)=>dot.setAttribute('aria-current',String(i===index)));
+ };
+ const go=index=>rail.scrollTo({left:positions[(index+positions.length)%positions.length],behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
+ const resize=()=>{
+  const max=Math.max(0,rail.scrollWidth-rail.clientWidth);
+  const first=cards[0].offsetLeft;
+  positions=cards.map(card=>card.offsetLeft-first).filter(left=>left<max-1);
+  positions.push(max);
+  if(dots.children.length!==positions.length){
+   dots.replaceChildren(...positions.map((left,index)=>{
+    const button=document.createElement('button');button.type='button';
+    button.setAttribute('aria-label','Afficher la sélection '+(index+1));
+    button.setAttribute('aria-controls',rail.id);
+    button.addEventListener('click',()=>go(index));return button;
+   }));
+  }
+  previous.hidden=next.hidden=dots.hidden=max<2;
+  current=-1;update();
+ };
+ previous.addEventListener('click',()=>go(nearest()-1));
+ next.addEventListener('click',()=>go(nearest()+1));
+ rail.addEventListener('scroll',()=>{if(!frame)frame=requestAnimationFrame(update)},{passive:true});
+ rail.addEventListener('keydown',event=>{
+  if(event.target!==rail)return;
+  const index=event.key==='ArrowLeft'?nearest()-1:event.key==='ArrowRight'?nearest()+1:event.key==='Home'?0:event.key==='End'?positions.length-1:null;
+  if(index!==null){event.preventDefault();go(index)}
+ });
+ carousel.dataset.carouselReady='true';
+ resize();
+ new ResizeObserver(resize).observe(rail);
+});
 async function updatePaWeather(){
   const temperature=document.querySelector('#pa-weather-temperature');
   if(!temperature)return;
