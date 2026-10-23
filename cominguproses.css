@@ -4603,3 +4603,32 @@ html::-webkit-scrollbar-corner{background:var(--rose-scrollbar-track)}
 /* Fin barre de défilement principale. */
 
 .post-param{width:100%;max-width:220px;text-wrap:balance}
+
+/* Halloween — fiches et résultats des dés, conservés dans les archives. */
+.cur-halloween-result,.cur-halloween-note,.cur-halloween-result *,.cur-halloween-note *{box-sizing:border-box}
+.cur-halloween-result{display:grid;grid-template-columns:112px minmax(0,1fr);gap:20px;width:550px;max-width:100%;margin:18px auto;padding:14px;border:1px solid var(--frame-soft);background:var(--neutralDark);color:var(--ink);text-align:left;text-transform:none}
+.cur-halloween-result+.cur-halloween-result{margin-top:16px}
+.cur-halloween-ticket{position:relative;isolation:isolate;display:flex;flex-direction:column;align-items:center;justify-content:center;align-self:center;gap:10px;aspect-ratio:1;min-height:0;overflow:hidden;background:linear-gradient(125deg,var(--accent1),var(--accent2));color:#fff}
+.cur-halloween-result .cur-halloween-ticket>img,.cur-halloween-note .cur-halloween-banner>img{display:block;width:100%;height:100%;max-width:none;max-height:none;margin:0;padding:0;border:0;border-radius:0;object-fit:cover;object-position:center;opacity:1;filter:grayscale(1);mix-blend-mode:darken}
+.cur-halloween-result .cur-halloween-ticket>img{position:absolute;inset:0;z-index:-1}
+.cur-halloween-result .cur-halloween-ticket>i{font-size:40px;line-height:1;filter:drop-shadow(0 2px 5px #000)}
+.cur-halloween-ticket>span{font:24px/1 var(--serif);text-shadow:0 2px 5px #000}
+.cur-halloween-result-copy{align-self:center;min-width:0;padding:24px 4px 6px 0}
+.cur-halloween-result .cur-halloween-kicker{display:block;margin:0 0 8px;color:var(--accent2);font:400 24px/0 var(--serif);letter-spacing:0;text-transform:lowercase}
+.cur-halloween-result-text{color:var(--ink);font:14px/1.8 var(--sans);text-transform:none;overflow-wrap:anywhere}
+.cur-halloween-note{width:650px;max-width:100%;margin:28px auto;padding:0;background:var(--neutralDark);color:var(--ink);font:14px/1.9 var(--sans);text-align:left;text-transform:none;overflow-wrap:anywhere}
+.cur-halloween-note>br,.cur-halloween-note-header>br,.cur-halloween-note-copy>br{display:none}
+.cur-halloween-note .cur-halloween-banner{height:180px;margin:0;padding:0;border:0;overflow:hidden;background:linear-gradient(125deg,var(--accent1),var(--accent2))}
+.cur-halloween-note-header{padding:30px 36px 0;text-align:center}
+.cur-halloween-note .cur-halloween-date,.cur-halloween-description .cur-halloween-date{display:block;margin:0 0 14px;color:var(--accent2);font:10px/1.6 var(--couture-sans);letter-spacing:.1em;text-transform:uppercase}
+.cur-halloween-note .cur-halloween-title{margin:0;padding:0;border:0;color:var(--accent2);font:400 54px/1.1 var(--script);letter-spacing:0;text-transform:none;text-align:center}
+.cur-halloween-note-copy{padding:26px 38px 36px}
+.cur-halloween-note-copy>div+div{margin-top:20px}
+.cur-halloween-note-copy strong{color:var(--ink)}
+.cur-halloween-note .cur-halloween-instructions{padding-top:20px;border-top:1px solid var(--frame-soft);font:13px/1.8 var(--sans);color:var(--muted)}
+.cur-halloween-description .cur-halloween-date{margin-bottom:8px}
+.rose-forum:has(.cur-halloween-description) .rose-forum-image{background:linear-gradient(125deg,var(--accent1),var(--accent2))}
+.rose-forum:has(.cur-halloween-description) .rose-forum-image img{opacity:1;filter:grayscale(1);mix-blend-mode:darken}
+@media(max-width:500px){.cur-halloween-result{grid-template-columns:88px minmax(0,1fr);gap:14px;padding:12px}.cur-halloween-result .cur-halloween-ticket>i{font-size:34px}.cur-halloween-ticket>span{font-size:23px}.cur-halloween-result-copy{padding:4px 0}.cur-halloween-result .cur-halloween-kicker{font-size:21px}.cur-halloween-result-text{font-size:13px}.cur-halloween-note .cur-halloween-banner{height:140px}.cur-halloween-note-header{padding:25px 24px 0}.cur-halloween-note .cur-halloween-title{font-size:43px}.cur-halloween-note-copy{padding:22px 24px 28px}}
+@media(prefers-reduced-motion:reduce){.cur-halloween-result .cur-halloween-ticket>img,.cur-halloween-note .cur-halloween-banner>img,.rose-forum:has(.cur-halloween-description) .rose-forum-image img{visibility:hidden}}
+/* Fin Halloween. */
