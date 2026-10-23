@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Henny+Penny&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Pirata+One&display=swap");
 
 @font-face{font-family:"game-icons-font";src:url("https://cdn.jsdelivr.net/gh/webcerise/cominguproses@main/Fonts/game-icons-font.woff2") format("woff2");font-weight:normal;font-style:normal;font-display:block;}
 .gi {
@@ -1709,7 +1709,7 @@ html[data-theme=dark] .category-heading>span b {
 }
 
 .header-brand h1.roses-logo>.logo-roses {
-  font-family:'Henny Penny',serif;
+  font-family:'Pirata One',serif;
   margin-top:4px;
 }
 
@@ -2413,7 +2413,8 @@ body:before { background:linear-gradient(135deg,rgb(85 49 111/.55),rgb(229 141 5
   pointer-events:none; }
 
 .society-header .header-brand h1.roses-logo { margin-top:0; }
-.header-brand h1.roses-logo>.logo-roses { font-family:'Henny Penny',serif;
+.header-brand h1.roses-logo>.logo-roses { font-family:'Pirata One',serif;
+  text-transform:uppercase;
   margin-top:-27px; }
 .header-brand h1.roses-logo>.logo-coming { padding:0;
   margin:0;
@@ -2909,7 +2910,11 @@ body { background:#0b0b0b;
   .header-pinterest { grid-template-columns:repeat(3,minmax(0,1fr)); }
 }
 .header-brand h1.roses-logo>.logo-coming { color:#fff; }
-.header-brand h1.roses-logo>.logo-roses { color:var(--accent2); }
+.header-brand h1.roses-logo>.logo-roses { background:linear-gradient(180deg,var(--accent2) 0%,var(--accent2) 50%,#b3262e 80%,#610d19 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  -webkit-text-fill-color:transparent; }
 .header-brand h1.roses-logo>.logo-roses { filter:drop-shadow(0 2px 1px rgb(0 0 0/.9)); }
 @keyframes header-photo-appear { from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)} }
 #roses-header>.header-window-scene .pinterest-photo { animation:header-photo-appear .7s ease both;
@@ -3424,7 +3429,7 @@ html[data-theme=light] .header-window-scene .header-colour{background:radial-gra
 html[data-theme=light] #roses-header .header-brand{color:#242424;text-shadow:none}
 html[data-theme=light] #roses-header .header-brand h1.roses-logo{color:#242424;text-shadow:none;filter:none}
 html[data-theme=light] #roses-header .header-brand h1.roses-logo>.logo-coming{color:#242424;text-shadow:0 1px 1px rgb(255 255 255/.6);filter:none}
-html[data-theme=light] #roses-header .header-brand h1.roses-logo>.logo-roses{color:var(--accent2);text-shadow:none;filter:drop-shadow(0 1px 1px rgb(255 255 255/.85))}
+html[data-theme=light] #roses-header .header-brand h1.roses-logo>.logo-roses{color:transparent;text-shadow:none;filter:drop-shadow(0 1px 1px rgb(255 255 255/.85))}
 html[data-theme=light] #roses-header .header-brand>p{color:#333;text-shadow:0 1px 1px rgb(255 255 255/.7);filter:none}
 html[data-theme=light] #roses-header .main-nav{border-top:1px solid rgb(80 80 80/.2);background:rgb(250 250 250/.86);color:#242424}
 html[data-theme=light] #roses-header .main-nav>a,html[data-theme=light] #roses-header .main-nav>button{color:inherit}
