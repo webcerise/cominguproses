@@ -2916,13 +2916,13 @@ body { background:#0b0b0b;
   color:transparent;
   -webkit-text-fill-color:transparent; }
 .header-brand h1.roses-logo>.logo-roses { filter:drop-shadow(0 2px 1px rgb(0 0 0/.9)); }
-@keyframes header-photo-appear { from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)} }
+@keyframes header-photo-appear { from{opacity:0;transform:translateY(12px)}to{opacity:var(--header-photo-opacity,1);transform:translateY(0)} }
 #roses-header>.header-window-scene .pinterest-photo { animation:header-photo-appear .7s ease both;
   animation-delay:var(--photo-delay,0ms); }
 @media(prefers-reduced-motion:reduce) {
   #roses-header>.header-window-scene .pinterest-photo { animation:none; }
 }
-@keyframes header-photo-appear { from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(0)} }
+@keyframes header-photo-appear { from{opacity:0;transform:translateY(-12px)}to{opacity:var(--header-photo-opacity,1);transform:translateY(0)} }
 @media(prefers-reduced-motion:reduce) {
   #roses-header>.header-window-scene .header-brand h1.roses-logo, #roses-header>.header-window-scene .header-brand>p { animation:none; }
 }
@@ -3406,7 +3406,7 @@ html[data-theme=light] .profile-sheet{--profile-paper:#fff;--profile-ink:#242424
 
 .topic-participant{display:grid;grid-template-columns:48px minmax(0,1fr) 14px;gap:13px;align-items:center;max-width:280px;min-width:0}.participant-portrait{width:48px;height:60px;padding:3px;border:1px solid color-mix(in srgb,var(--group-color) 45%,transparent);overflow:hidden;transition:border-color .4s ease}.participant-portrait img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 25%;filter:grayscale(1);transition:filter .65s ease,transform .65s ease}.participant-identity{min-width:0}.participant-identity small{display:block;margin-bottom:5px;font:12px/1.3 var(--serif);text-transform:uppercase;color:#bbb}.participant-identity strong{display:block;font:900 14px/1.25 var(--sans);text-transform:uppercase;color:var(--group-color);overflow-wrap:anywhere}.topic-participant>i{font-size:15px;color:var(--group-color);opacity:0;transform:translate(-3px,3px);transition:opacity .35s ease,transform .35s ease}.topic-participant:hover .participant-portrait,.topic-participant:focus-visible .participant-portrait{border-color:var(--group-color)}.topic-participant:hover img,.topic-participant:focus-visible img{filter:none;transform:scale(1.04)}.topic-participant:hover>i,.topic-participant:focus-visible>i{opacity:1;transform:none}@media(max-width:600px){.topic-participants{width:100%;gap:18px}.topic-participant{max-width:none;width:100%}}@media(prefers-reduced-motion:reduce){.participant-portrait,.participant-portrait img,.topic-participant>i{transition:none}}
 
-html[data-theme=light]{color-scheme:light;--ivory:#242424;--ink:#242424;--paper:#fff;--muted:#606060;--accent1:#55316f;--accent2:#a94b0c;--accent2-rgb:169 75 12;--frame-line:rgb(80 80 80/.3);--frame-soft:rgb(80 80 80/.17);--group-old-money:#806025;--group-new-money:#923e58;--group-influence:#4a6650;--group-outsiders:#43677e}
+html[data-theme=light]{color-scheme:light;--ivory:#242424;--ink:#242424;--paper:#fff;--muted:#606060;--accent1:#55316f;--accent2:#e58d39;--accent2-rgb:229 141 57;--frame-line:rgb(80 80 80/.3);--frame-soft:rgb(80 80 80/.17);--group-old-money:#806025;--group-new-money:#923e58;--group-influence:#4a6650;--group-outsiders:#43677e}
 html[data-theme=light] body{background:#eee;color:#242424}
 html[data-theme=light] body::before{background:none}
 html[data-theme=light] .page-header-backdrop{opacity:.12;filter:grayscale(1) blur(12px)}
@@ -3414,7 +3414,7 @@ html[data-theme=light] .site-content::before{background:none}
 html[data-theme=light] .rose-body{color:#242424;--body-line:var(--frame-soft)}
 html[data-theme=light] .rose-body .rose-category{background:#fff}
 html[data-theme=light] .rose-body .rose-category :is(.rose-forums,.rose-last){background:#fff}
-html[data-theme=light] :is(.society-header,.header-window-scene,.rose-category-head){--accent2:#a94b0c;--accent2-rgb:169 75 12;--ivory:#242424;color:#242424}
+html[data-theme=light] :is(.society-header,.header-window-scene,.rose-category-head){--accent2:#e58d39;--accent2-rgb:229 141 57;--ivory:#242424;color:#242424}
 html[data-theme=light] #roses-header{background:#eee}
 html[data-theme=light] .header-window-scene .header-background{filter:grayscale(1) brightness(1.15);opacity:.5}
 html[data-theme=light] .header-window-scene .header-pinterest{background:#eee}
@@ -3423,14 +3423,14 @@ html[data-theme=light] .rose-category-head::after{background:rgb(255 255 255/.2)
 html[data-theme=light] .rose-body .rose-category-head,html[data-theme=light] .rose-body .rose-category-head :is(.header-window-scene,.header-pinterest){background:#fff}
 html[data-theme=light] .rose-body .rose-category-head::after{background:rgb(255 255 255/.4)}
 html[data-theme=light] .rose-category-head>div:not(.header-window-scene){text-shadow:0 1px 1px rgb(255 255 255/.7)}
-html[data-theme=light] .header-window-scene .pinterest-photo{background:linear-gradient(125deg,#55316f,#e58d39)}
+html[data-theme=light] .header-window-scene .pinterest-photo{--header-photo-opacity:.3;opacity:var(--header-photo-opacity);background:linear-gradient(125deg,#55316f,#e58d39)}
 html[data-theme=light] .header-window-scene .pinterest-photo img{filter:grayscale(1) brightness(.75);mix-blend-mode:darken;opacity:1}
-html[data-theme=light] .header-window-scene .header-colour{background:radial-gradient(ellipse at 50% 45%,rgb(255 255 255/.78),rgb(255 255 255/.46) 45%,rgb(255 255 255/.18) 85%),linear-gradient(0deg,rgb(238 238 238/.3),rgb(238 238 238/.16));mix-blend-mode:normal}
+html[data-theme=light] .header-window-scene .header-colour{background:none;mix-blend-mode:normal}
 html[data-theme=light] #roses-header .header-brand{color:#242424;text-shadow:none}
 html[data-theme=light] #roses-header .header-brand h1.roses-logo{color:#242424;text-shadow:none;filter:none}
-html[data-theme=light] #roses-header .header-brand h1.roses-logo>.logo-coming{color:#242424;text-shadow:0 1px 1px rgb(255 255 255/.6);filter:none}
-html[data-theme=light] #roses-header .header-brand h1.roses-logo>.logo-roses{color:transparent;text-shadow:none;filter:drop-shadow(0 1px 1px rgb(255 255 255/.85))}
-html[data-theme=light] #roses-header .header-brand>p{color:#333;text-shadow:0 1px 1px rgb(255 255 255/.7);filter:none}
+html[data-theme=light] #roses-header .header-brand h1.roses-logo>.logo-coming{color:#080808;text-shadow:0 1px 1px rgb(255 255 255/.6);filter:none}
+html[data-theme=light] #roses-header .header-brand h1.roses-logo>.logo-roses{color:transparent;text-shadow:none;filter:drop-shadow(0 2px 1px rgb(0 0 0/.9))}
+html[data-theme=light] #roses-header .header-brand>p{color:#080808;text-shadow:0 1px 1px rgb(255 255 255/.7);filter:none}
 html[data-theme=light] #roses-header .main-nav{border-top:1px solid rgb(80 80 80/.2);background:rgb(250 250 250/.86);color:#242424}
 html[data-theme=light] #roses-header .main-nav>a,html[data-theme=light] #roses-header .main-nav>button{color:inherit}
 html[data-theme=light] #roses-header .main-nav>a:hover,html[data-theme=light] #roses-header .main-nav>button:hover,html[data-theme=light] #roses-header .main-nav>a:focus-visible,html[data-theme=light] #roses-header .main-nav>button:focus-visible{color:var(--accent2)}
@@ -4609,7 +4609,7 @@ body.roses-live .instagram-comment-body footer{max-width:none;margin:7px 0 0;pad
 
 /* Barre de défilement principale — contraste jour / nuit. */
 html{--rose-scrollbar-thumb:#e58d39;--rose-scrollbar-track:#171717;--rose-scrollbar-hover:#ffb56d;scrollbar-color:var(--rose-scrollbar-thumb) var(--rose-scrollbar-track);scrollbar-width:auto}
-html[data-theme=light],html:not([data-theme])[data-color-scheme=light]{--rose-scrollbar-thumb:#a94b0c;--rose-scrollbar-track:#eee;--rose-scrollbar-hover:#7d3507}
+html[data-theme=light],html:not([data-theme])[data-color-scheme=light]{--rose-scrollbar-thumb:#e58d39;--rose-scrollbar-track:#eee;--rose-scrollbar-hover:#ffb56d}
 body{scrollbar-color:auto}
 html::-webkit-scrollbar{width:12px;height:12px}
 html::-webkit-scrollbar-track{background:var(--rose-scrollbar-track)}
