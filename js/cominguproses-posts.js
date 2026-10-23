@@ -49,21 +49,20 @@
   40:['On vous confond avec quelqu’un d’autre.','mask-happy'],
   41:['Vous acceptez un défi débile.','game-controller'],
   42:['Vous perdez votre groupe d’amis dans la foule.','users'],
-  43:['Vous tombez dans l’eau d’une des attractions.','waves'],
-  44:['Vous retrouvez un objet perdu depuis des années.','gift'],
-  45:['Vous remportez un lot ayant appartenu à un visiteur disparu.','ghost'],
-  46:['Vous apercevez une personne portant exactement le même costume que vous.','mask-happy'],
-  47:['Vous découvrez que toutes les horloges indiquent minuit.','clock'],
-  48:['Vous entendez parler d’une attraction qui aurait été fermée après un accident.','warning-circle'],
-  49:['Vous vous retrouvez enfermé·e dans une attraction après la fermeture.','lock-key'],
-  50:['Vous entendez un rire provenant d’une cabine de voyance vide.','cards'],
-  51:['Toutes les lumières d’un stand s’éteignent à votre passage.','moon'],
-  52:['Une silhouette vous suit tout au long de la soirée.','footprints'],
-  53:['Vous trouvez une enveloppe mystérieuse dans la poche de votre costume.','envelope-simple'],
-  54:['Vous réussissez à attraper une peluche aux machines à pinces.','gift'],
-  55:['Vous partagez votre barbe à papa avec quelqu’un.','heart'],
-  56:['Vous restez bloqué·e dans une attraction pendant une heure.','clock'],
-  57:['Vous croisez un clown terrifiant et sanglant en arrivant à l’infirmerie.','first-aid-kit']
+  43:['Vous retrouvez un objet perdu depuis des années.','gift'],
+  44:['Vous remportez un lot ayant appartenu à un visiteur disparu.','ghost'],
+  45:['Vous apercevez une personne portant exactement le même costume que vous.','mask-happy'],
+  46:['Vous découvrez que toutes les horloges indiquent minuit.','clock'],
+  47:['Vous entendez parler d’une attraction qui aurait été fermée après un accident.','warning-circle'],
+  48:['Vous vous retrouvez enfermé·e dans une attraction après la fermeture.','lock-key'],
+  49:['Vous entendez un rire provenant d’une cabine de voyance vide.','cards'],
+  50:['Toutes les lumières d’un stand s’éteignent à votre passage.','moon'],
+  51:['Une silhouette vous suit tout au long de la soirée.','footprints'],
+  52:['Vous trouvez une enveloppe mystérieuse dans la poche de votre costume.','envelope-simple'],
+  53:['Vous réussissez à attraper une peluche aux machines à pinces.','gift'],
+  54:['Vous partagez votre barbe à papa avec quelqu’un.','heart'],
+  55:['Vous restez bloqué·e dans une attraction pendant une heure.','clock'],
+  56:['Vous croisez un clown terrifiant et sanglant en arrivant à l’infirmerie.','first-aid-kit']
  };
  function renderHalloweenDice(){
   document.querySelectorAll('.topic-post .post-prose').forEach(prose=>{
@@ -82,7 +81,7 @@
     const ticket=document.createElement('div');ticket.className='cur-halloween-ticket';
     const image=document.createElement('img');image.src=halloweenGif;image.alt='';image.loading='lazy';image.decoding='async';
     const icon=document.createElement('i');icon.className='ph-thin ph-'+iconName;icon.setAttribute('aria-hidden','true');
-    const score=document.createElement('span');score.textContent=String(number).padStart(2,'0');score.setAttribute('aria-label','Résultat '+number+' sur 57');
+    const score=document.createElement('span');score.textContent=String(number).padStart(2,'0');score.setAttribute('aria-label','Résultat '+number+' sur 56');
     ticket.append(image,icon,score);
     const copy=document.createElement('div');copy.className='cur-halloween-result-copy';
     const label=document.createElement('span');label.className='cur-halloween-kicker';label.textContent='trick or treat?';
